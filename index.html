@@ -8,243 +8,673 @@
 		<style>
 			:root {
 				--bg: #ffffff;
-				--panel: #ffffff;
-				--muted-bg: #f4f4f4;
-				--hover: #eaeaea;
-				--text: #202124;
-				--text-dim: #666666;
-				--text-faint: #9a9a9a;
-				--border: rgba(13, 13, 13, 0.1);
-				--border-strong: rgba(13, 13, 13, 0.16);
-				--accent: #18181b;
+				--surface: #ffffff;
+				--surface-2: #f6f6f7;
+				--hover: #efeff1;
+				--text: #1b1b1f;
+				--text-dim: #5f5f68;
+				--text-faint: #71717a;
+				--border: #e6e6e9;
+				--border-strong: #d4d4da;
+				--accent: #1b1b1f;
 				--accent-text: #ffffff;
-				--warn: #b45309;
+				--ok: #0f7a4a;
+				--warn: #a4530a;
+				--danger: #b42318;
+				--sel: #dcdce2;
 				--radius: 10px;
+				--radius-sm: 6px;
+				--font: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+				--mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 				color-scheme: light;
 			}
 			@media (prefers-color-scheme: dark) {
 				:root {
-					--bg: #121212;
-					--panel: #1a1a1a;
-					--muted-bg: #262626;
-					--hover: #2e2e2e;
-					--text: #ecece7;
-					--text-dim: #b8b8b2;
-					--text-faint: #a0a09a;
-					--border: rgba(255, 255, 255, 0.06);
-					--border-strong: rgba(255, 255, 255, 0.12);
-					--accent: #fafafa;
-					--accent-text: #121212;
+					--bg: #0e0e10;
+					--surface: #191a1e;
+					--surface-2: #24252b;
+					--hover: #2a2a31;
+					--text: #ececef;
+					--text-dim: #b4b4bd;
+					--text-faint: #9a9aa4;
+					--border: #26262d;
+					--border-strong: #3a3a43;
+					--accent: #f2f2f4;
+					--accent-text: #131316;
+					--ok: #4ade80;
 					--warn: #fbbf24;
+					--danger: #f87171;
+					--sel: #34343c;
 					color-scheme: dark;
 				}
 			}
 			* {
 				box-sizing: border-box;
 			}
+			[hidden] {
+				display: none !important;
+			}
 			body {
 				margin: 0;
-				padding: 32px 20px 64px;
+				padding: 0 24px 72px;
 				background: var(--bg);
 				color: var(--text);
-				font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+				font: 14px/1.6 var(--font);
 				-webkit-font-smoothing: antialiased;
+				caret-color: var(--text);
 			}
+			::selection {
+				background: var(--sel);
+				color: var(--text);
+			}
+			* {
+				scrollbar-width: thin;
+				scrollbar-color: var(--border-strong) transparent;
+			}
+			.wrap,
 			main {
-				max-width: 820px;
+				max-width: 1180px;
 				margin: 0 auto;
+			}
+			a {
+				color: inherit;
+				text-decoration-color: var(--border-strong);
+				text-underline-offset: 3px;
+			}
+			code {
+				font-family: var(--mono);
+				font-size: 0.92em;
+				padding: 1px 4px;
+				border-radius: 4px;
+				background: var(--surface-2);
+			}
+			header {
+				padding: 36px 0 18px;
 			}
 			h1 {
 				margin: 0;
-				font-size: 26px;
-				letter-spacing: -0.01em;
+				font-size: 22px;
+				font-weight: 650;
+				letter-spacing: -0.012em;
 			}
 			.lead {
+				max-width: 72ch;
 				margin: 6px 0 0;
 				color: var(--text-dim);
 			}
-			.lead a {
-				color: inherit;
+			.lead strong {
+				color: var(--text);
+				font-weight: 600;
 			}
-			form {
+
+			/* toolbar */
+			.toolbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
 				display: flex;
 				flex-wrap: wrap;
-				gap: 8px;
-				margin: 22px 0 6px;
+				align-items: center;
+				gap: 10px;
+				margin: 0 -24px;
+				padding: 12px 24px;
+				background: var(--bg);
+				border-bottom: 1px solid var(--border);
+			}
+			.seg {
+				display: flex;
+				gap: 2px;
+				padding: 3px;
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				background: var(--surface-2);
+			}
+			.seg button {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				height: 30px;
+				padding: 0 11px;
+				border: 0;
+				border-radius: var(--radius-sm);
+				background: transparent;
+				color: var(--text-dim);
+				font: inherit;
+				font-size: 13px;
+				cursor: pointer;
+				transition: background 150ms ease-out, color 150ms ease-out;
+			}
+			.seg button:hover {
+				background: var(--hover);
+				color: var(--text);
+			}
+			.seg button[aria-pressed="true"] {
+				background: var(--surface);
+				color: var(--text);
+				box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+			}
+			.seg .n {
+				font-family: var(--mono);
+				font-size: 11px;
+				color: var(--text-faint);
+				font-variant-numeric: tabular-nums;
+			}
+			.seg button[aria-pressed="true"] .n {
+				color: var(--text-dim);
+			}
+			.field {
+				position: relative;
+				display: flex;
+				flex: 0 1 300px;
+				align-items: center;
+				min-width: 0;
+				margin-left: auto;
+			}
+			.field svg {
+				position: absolute;
+				left: 10px;
+				width: 15px;
+				height: 15px;
+				color: var(--text-faint);
+				pointer-events: none;
 			}
 			input[type="search"] {
-				flex: 1 1 240px;
-				min-width: 0;
-				height: 38px;
-				padding: 0 12px;
+				width: 100%;
+				height: 36px;
+				padding: 0 34px 0 32px;
 				border: 1px solid var(--border-strong);
 				border-radius: var(--radius);
-				background: var(--panel);
+				background: var(--surface);
 				color: inherit;
 				font: inherit;
+				font-size: 13px;
+				appearance: none;
 			}
-			.filters {
-				display: flex;
-				gap: 6px;
+			input[type="search"]::placeholder {
+				color: var(--text-faint);
 			}
-			button {
-				height: 38px;
-				padding: 0 12px;
-				border: 1px solid var(--border-strong);
-				border-radius: var(--radius);
-				background: var(--panel);
-				color: inherit;
-				font: inherit;
-				cursor: pointer;
+			input[type="search"]:hover {
+				border-color: var(--text-faint);
 			}
-			button:hover {
-				background: var(--hover);
+			input[type="search"]::-webkit-search-cancel-button {
+				appearance: none;
 			}
-			button[aria-pressed="true"] {
-				border-color: transparent;
-				background: var(--accent);
-				color: var(--accent-text);
+			.kbd {
+				position: absolute;
+				right: 8px;
+				display: grid;
+				place-items: center;
+				min-width: 20px;
+				height: 20px;
+				padding: 0 5px;
+				border: 1px solid var(--border);
+				border-radius: 4px;
+				background: var(--surface-2);
+				color: var(--text-faint);
+				font-family: var(--mono);
+				font-size: 11px;
+				line-height: 1;
+				pointer-events: none;
 			}
-			button.small {
-				height: 28px;
-				padding: 0 8px;
-				font-size: 12px;
+			.field:focus-within .kbd {
+				opacity: 0;
 			}
-			input:focus-visible,
-			button:focus-visible {
-				outline: 2px solid var(--accent);
-				outline-offset: 1px;
-			}
+
 			.status {
-				min-height: 1.6em;
-				margin: 0 0 12px;
+				margin: 14px 0 0;
+				font-size: 13px;
+				color: var(--text-dim);
+				font-variant-numeric: tabular-nums;
+			}
+			.notice {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: baseline;
+				gap: 10px;
+				margin-top: 10px;
+				padding: 9px 12px;
+				border: 1px solid var(--border-strong);
+				border-radius: var(--radius);
+				background: var(--surface-2);
 				font-size: 13px;
 				color: var(--text-dim);
 			}
-			.status[data-tone="warn"] {
-				color: var(--warn);
+			.notice strong {
+				color: var(--danger);
+				font-weight: 600;
 			}
-			.list {
+			.notice button {
+				height: 26px;
+				padding: 0 9px;
+				border: 1px solid var(--border-strong);
+				border-radius: var(--radius-sm);
+				background: var(--surface);
+				color: var(--text);
+				font: inherit;
+				font-size: 12px;
+				cursor: pointer;
+			}
+			.notice button:hover {
+				background: var(--hover);
+			}
+
+			/* groups */
+			.group {
+				margin-top: 22px;
+			}
+			.group-head {
 				display: flex;
-				flex-direction: column;
+				flex-wrap: wrap;
+				align-items: baseline;
+				gap: 10px;
+				margin: 0 0 10px;
+			}
+			.group-head h2 {
+				margin: 0;
+				font-size: 13px;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+			}
+			.group-note {
+				font-size: 12px;
+				color: var(--text-faint);
+			}
+
+			/* card grid */
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
 				gap: 10px;
 				margin: 0;
 				padding: 0;
 				list-style: none;
 			}
 			.card {
-				padding: 14px 16px;
+				display: flex;
+				flex-direction: column;
+				padding: 12px 13px 10px;
 				border: 1px solid var(--border);
 				border-radius: var(--radius);
-				background: var(--panel);
+				background: var(--surface);
+				transition: border-color 150ms ease-out;
 			}
-			.card-top {
+			.card:hover {
+				border-color: var(--border-strong);
+			}
+			.c-head {
+				display: grid;
+				grid-template-columns: 34px minmax(0, 1fr) auto;
+				align-items: start;
+				gap: 10px;
+			}
+			.c-icon {
+				display: grid;
+				place-items: center;
+				width: 34px;
+				height: 34px;
+				border-radius: 9px;
+				background: var(--surface-2);
+				color: var(--text-dim);
+			}
+			.c-icon svg {
+				width: 18px;
+				height: 18px;
+			}
+			.c-icon[data-letter] {
+				font-family: var(--mono);
+				font-size: 14px;
+				font-weight: 600;
+				color: var(--text-dim);
+				text-transform: uppercase;
+			}
+			.c-title {
+				min-width: 0;
+			}
+			.c-name {
+				display: block;
+				overflow: hidden;
+				font-size: 14.5px;
+				font-weight: 600;
+				letter-spacing: -0.006em;
+				text-decoration: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			.c-name:hover {
+				text-decoration: underline;
+				text-underline-offset: 2px;
+			}
+			.c-by {
 				display: flex;
-				flex-wrap: wrap;
 				align-items: center;
-				gap: 8px;
+				gap: 5px;
+				margin-top: 1px;
+				font-size: 11.5px;
+				color: var(--text-faint);
 			}
-			.card-top strong {
-				font-size: 15px;
+			.c-by svg {
+				width: 12px;
+				height: 12px;
+				flex: none;
 			}
-			.version {
-				font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-				font-size: 12px;
-				color: var(--text-dim);
+			.c-by[data-kind="registry"] svg {
+				color: var(--ok);
 			}
-			.badge {
-				padding: 1px 7px;
-				border: 1px solid var(--border-strong);
-				border-radius: 999px;
-				font-size: 11px;
-				color: var(--text-dim);
-			}
-			.badge[data-kind="github"] {
-				border-style: dashed;
+			.c-by[data-kind="github"] svg {
 				color: var(--warn);
 			}
-			.card p {
-				margin: 6px 0 0;
+			.c-act {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+				height: 26px;
+				padding: 0 9px;
+				border: 1px solid var(--border-strong);
+				border-radius: 999px;
+				background: var(--surface);
 				color: var(--text-dim);
+				font: inherit;
+				font-size: 12px;
+				white-space: nowrap;
+				cursor: pointer;
+				transition: background 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
 			}
-			.chips {
+			.c-act:hover {
+				background: var(--hover);
+				color: var(--text);
+			}
+			.c-act svg {
+				width: 12px;
+				height: 12px;
+			}
+			.c-act[data-state="done"] {
+				border-color: var(--ok);
+				color: var(--ok);
+			}
+			.c-act[data-state="failed"] {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.c-desc {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				overflow: hidden;
+				margin: 9px 0 0;
+				color: var(--text-dim);
+				font-size: 13px;
+				line-height: 1.55;
+			}
+			.c-perms {
 				display: flex;
 				flex-wrap: wrap;
 				gap: 4px;
 				margin-top: 8px;
 			}
 			.chip {
-				padding: 1px 6px;
+				max-width: 104px;
+				overflow: hidden;
+				padding: 1px 7px;
 				border-radius: 999px;
-				background: var(--muted-bg);
-				font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+				background: var(--surface-2);
+				font-family: var(--mono);
 				font-size: 11px;
 				color: var(--text-dim);
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
-			.card-actions {
+			.chip[data-none] {
+				background: transparent;
+				border: 1px dashed var(--border-strong);
+				color: var(--text-faint);
+			}
+			.chip[data-more] {
+				font-variant-numeric: tabular-nums;
+			}
+			.c-foot {
 				display: flex;
 				flex-wrap: wrap;
 				align-items: center;
 				gap: 8px;
-				margin-top: 10px;
-			}
-			.card-actions .spacer {
-				flex: 1 1 auto;
-			}
-			.card-actions a {
-				color: var(--text-dim);
-				font-size: 12px;
-			}
-			.hint {
-				margin: 26px 0 0;
-				padding: 12px 14px;
-				border: 1px solid var(--border);
-				border-radius: var(--radius);
-				background: var(--muted-bg);
-				font-size: 13px;
-				color: var(--text-dim);
-			}
-			.hint code {
-				padding: 1px 5px;
-				border-radius: 5px;
-				background: var(--panel);
-				font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-				font-size: 12px;
-			}
-			footer {
-				margin-top: 26px;
-				font-size: 12px;
+				margin-top: auto;
+				padding-top: 8px;
+				font-size: 11.5px;
 				color: var(--text-faint);
 			}
-			footer a {
-				color: inherit;
+			.c-kind {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+			}
+			.c-kind svg {
+				width: 12px;
+				height: 12px;
+			}
+			.c-ver {
+				font-family: var(--mono);
+				font-variant-numeric: tabular-nums;
+			}
+			.c-stars {
+				margin-left: auto;
+				font-family: var(--mono);
+				font-variant-numeric: tabular-nums;
+			}
+
+			input:focus-visible,
+			button:focus-visible,
+			a:focus-visible {
+				outline: 2px solid var(--accent);
+				outline-offset: 2px;
+				border-radius: 4px;
+			}
+
+			/* empty */
+			.empty {
+				margin-top: 22px;
+				padding: 36px 20px;
+				border: 1px dashed var(--border-strong);
+				border-radius: var(--radius);
+				text-align: center;
+			}
+			.empty h2 {
+				margin: 0;
+				font-size: 15px;
+				font-weight: 600;
+			}
+			.empty p {
+				max-width: 46ch;
+				margin: 6px auto 0;
+				color: var(--text-dim);
+				font-size: 13px;
+			}
+			.empty .actions {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 8px;
+				margin-top: 16px;
+			}
+			.empty button {
+				height: 32px;
+				padding: 0 12px;
+				border: 1px solid var(--border-strong);
+				border-radius: var(--radius-sm);
+				background: var(--surface);
+				color: var(--text);
+				font: inherit;
+				font-size: 13px;
+				cursor: pointer;
+			}
+			.empty button:hover {
+				background: var(--hover);
+			}
+
+			/* skeleton */
+			.sk {
+				border-radius: 4px;
+				background: var(--surface-2);
+			}
+			.skeleton .sk {
+				animation: pulse 1.4s ease-in-out infinite;
+			}
+			@keyframes pulse {
+				50% {
+					opacity: 0.5;
+				}
+			}
+			@media (prefers-reduced-motion: reduce) {
+				.skeleton .sk {
+					animation: none;
+				}
+			}
+			.sk-card {
+				height: 168px;
+				border: 1px solid var(--border);
+				border-radius: var(--radius);
+				background: var(--surface);
+				padding: 13px 14px;
+			}
+			.sk-line {
+				height: 9px;
+				margin-top: 9px;
+			}
+
+			/* how to install */
+			.how {
+				max-width: 74ch;
+				margin-top: 36px;
+				padding-top: 18px;
+				border-top: 1px solid var(--border);
+			}
+			.how h2 {
+				margin: 0 0 10px;
+				font-size: 13px;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+			}
+			.how ol {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				counter-reset: step;
+			}
+			.how li {
+				position: relative;
+				padding-left: 26px;
+				color: var(--text-dim);
+			}
+			.how li + li {
+				margin-top: 6px;
+			}
+			.how li::before {
+				counter-increment: step;
+				content: counter(step);
+				position: absolute;
+				left: 0;
+				top: 1px;
+				display: grid;
+				place-items: center;
+				width: 17px;
+				height: 17px;
+				border: 1px solid var(--border-strong);
+				border-radius: 50%;
+				font-family: var(--mono);
+				font-size: 10px;
+				color: var(--text-faint);
+			}
+			.how strong {
+				color: var(--text);
+				font-weight: 600;
+			}
+			footer {
+				max-width: 74ch;
+				margin-top: 32px;
+				padding-top: 14px;
+				border-top: 1px solid var(--border);
+				font-size: 12px;
+				line-height: 1.8;
+				color: var(--text-faint);
+			}
+
+			@media (max-width: 620px) {
+				body {
+					padding: 0 14px 56px;
+				}
+				header {
+					padding: 26px 0 14px;
+				}
+				.toolbar {
+					margin: 0 -14px;
+					padding: 10px 14px;
+				}
+				.field {
+					flex: 1 1 100%;
+					margin-left: 0;
+					order: -1;
+				}
+				.seg {
+					width: 100%;
+				}
+				.seg button {
+					flex: 1 1 0;
+					justify-content: center;
+				}
+				.grid {
+					grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+				}
 			}
 		</style>
 	</head>
 	<body>
+		<header>
+			<div class="wrap">
+				<h1>PiDeck 插件</h1>
+				<p class="lead">
+					收录表来自本仓库的 <a href="./registry.json"><code>registry.json</code></a>，人工核对过 manifest 与权限；社区来源是 GitHub 上所有打了
+					<code>pideck-plugin</code> topic 的仓库。<strong>社区插件没有人审阅过</strong>，装之前请自己看一眼源码。
+				</p>
+			</div>
+		</header>
+
 		<main>
-			<h1>PiDeck 插件</h1>
-			<p class="lead">
-				收录表来自本仓库的 <a href="./registry.json"><code>registry.json</code></a>；社区来源是 GitHub 上所有打了
-				<code>pideck-plugin</code> topic 的仓库。<strong>社区插件没有人审阅过</strong>，装之前请自己看一眼源码。
-			</p>
-
-			<form id="search">
-				<input id="query" type="search" placeholder="搜索名字、描述、作者、标签…" autocomplete="off" />
-				<div class="filters" role="group" aria-label="来源">
-					<button type="button" data-source="all" aria-pressed="true">全部</button>
-					<button type="button" data-source="registry" aria-pressed="false">收录</button>
-					<button type="button" data-source="github" aria-pressed="false">社区</button>
+			<div class="toolbar">
+				<div class="seg" role="group" aria-label="来源">
+					<button type="button" data-source="all" aria-pressed="true">全部<span class="n" data-count="all">0</span></button>
+					<button type="button" data-source="registry" aria-pressed="false">收录<span class="n" data-count="registry">0</span></button>
+					<button type="button" data-source="github" aria-pressed="false">社区<span class="n" data-count="github">0</span></button>
 				</div>
-			</form>
+				<div class="field">
+					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+						<circle cx="7" cy="7" r="4.25" />
+						<path d="M10.25 10.25 13.5 13.5" stroke-linecap="round" />
+					</svg>
+					<input id="query" type="search" placeholder="按名称、作者、标签筛选" autocomplete="off" aria-label="搜索插件" />
+					<span class="kbd" aria-hidden="true">/</span>
+				</div>
+			</div>
 
-			<p id="status" class="status">加载中…</p>
-			<ul id="list" class="list"></ul>
+			<p id="status" class="status" role="status" aria-live="polite">加载中…</p>
+			<div id="notice" class="notice" hidden></div>
 
-			<p class="hint">
-				安装：在 PiDeck 里打开「设置 → 插件 → 安装插件 → 从 GitHub 链接…」，粘贴下面卡片里的链接。安装只是把源码包放进去，
-				<strong>装完仍然是禁用状态</strong>，要你在插件列表里逐项确认权限后才启用。
-			</p>
+			<div id="results"></div>
+
+			<div id="empty" class="empty" hidden>
+				<h2 id="empty-title">没有匹配的插件</h2>
+				<p id="empty-hint">换个关键词，或者切回全部来源看看。</p>
+				<div class="actions">
+					<button type="button" id="clear">清除搜索</button>
+					<button type="button" id="show-all">看全部</button>
+				</div>
+			</div>
+
+			<section class="how">
+				<h2>怎么装</h2>
+				<ol>
+					<li>在 PiDeck 里打开「设置 → 插件 → 安装插件 → 从 GitHub 链接…」，粘贴卡片上的安装链接。</li>
+					<li>安装只是把源码包放进去，<strong>不执行仓库里的任何脚本</strong>，也不会跑构建。</li>
+					<li>装完仍然是<strong>禁用状态</strong>，要你在插件列表里逐项确认权限后才启用。</li>
+				</ol>
+			</section>
 
 			<footer>
 				收录自己的插件：往 <a href="https://github.com/ayuayue/pideck-plugins">ayuayue/pideck-plugins</a> 提 PR（模板见 <code>templates/</code>）；只想自己分发就在仓库上打
@@ -261,15 +691,47 @@
 			const MANIFEST_FILE = "pideck-plugin.json";
 
 			const el = (id) => document.getElementById(id);
-			const state = { registry: [], github: [], source: "all", query: "", githubWarning: "" };
+			const state = { registry: [], github: [], source: "all", query: "", errors: [], loading: true };
 
-			const setStatus = (message, tone) => {
+			const setStatus = (message) => {
 				el("status").textContent = message;
-				if (tone) el("status").dataset.tone = tone;
-				else delete el("status").dataset.tone;
 			};
 
 			const installUrl = (entry) => (entry.subpath ? `https://github.com/${entry.repo}/tree/${entry.ref ?? "main"}/${entry.subpath}` : `https://github.com/${entry.repo}`);
+
+			const ICONS = {
+				activity: '<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>',
+				"file-text": '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
+				layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+				"bar-chart": '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+				box: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+				window: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
+				panel: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
+				popover: '<path d="M4 4h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-7l-4 4v-4H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/>',
+				copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+				check: '<path d="M20 6 9 17l-5-5"/>',
+				shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>',
+				star: '<path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>',
+			};
+
+			const KINDS = { page: ["window", "页面"], popover: ["popover", "浮层"], modal: ["panel", "弹窗"] };
+
+			const icon = (name, size) => {
+				const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+				node.setAttribute("viewBox", "0 0 24 24");
+				node.setAttribute("fill", "none");
+				node.setAttribute("stroke", "currentColor");
+				node.setAttribute("stroke-width", "1.6");
+				node.setAttribute("stroke-linecap", "round");
+				node.setAttribute("stroke-linejoin", "round");
+				node.setAttribute("aria-hidden", "true");
+				node.innerHTML = ICONS[name] ?? ICONS.box;
+				if (size) {
+					node.style.width = size;
+					node.style.height = size;
+				}
+				return node;
+			};
 
 			function loadRegistry() {
 				return fetch(REGISTRY_URL).then((response) => {
@@ -305,6 +767,8 @@
 							version: manifest.version,
 							description: manifest.description ?? repo.description,
 							permissions: Array.isArray(manifest.permissions) ? manifest.permissions : [],
+							icon: manifest.icon,
+							presentations: Array.isArray(manifest.presentations) ? manifest.presentations : [],
 							repo: repo.full_name,
 							stars: repo.stargazers_count,
 							license: repo.license?.spdx_id && repo.license.spdx_id !== "NOASSERTION" ? repo.license.spdx_id : undefined,
@@ -328,97 +792,233 @@
 				return [entry.id, entry.name, entry.description, entry.author, entry.repo, ...(entry.tags ?? [])].some((value) => typeof value === "string" && value.toLowerCase().includes(needle));
 			}
 
-			function card(entry) {
+			function pluginCard(entry) {
 				const item = document.createElement("li");
 				item.className = "card";
 
-				const top = document.createElement("div");
-				top.className = "card-top";
-				const name = document.createElement("strong");
-				name.textContent = entry.name ?? entry.id;
-				top.append(name);
-				if (entry.version) {
-					const version = document.createElement("span");
-					version.className = "version";
-					version.textContent = entry.version;
-					top.append(version);
-				}
-				const badge = document.createElement("span");
-				badge.className = "badge";
-				badge.dataset.kind = entry.source;
-				badge.textContent = entry.source === "registry" ? "收录" : `社区 · 未审阅${entry.stars ? ` · ${entry.stars}★` : ""}`;
-				top.append(badge);
-				item.append(top);
+				const head = document.createElement("div");
+				head.className = "c-head";
 
-				const id = document.createElement("p");
-				id.textContent = `${entry.id} · ${entry.repo}${entry.license ? ` · ${entry.license}` : ""}`;
-				item.append(id);
-
-				if (entry.description) {
-					const description = document.createElement("p");
-					description.textContent = entry.description;
-					item.append(description);
-				}
-
-				if (entry.permissions?.length) {
-					const chips = document.createElement("div");
-					chips.className = "chips";
-					for (const permission of entry.permissions) {
-						const chip = document.createElement("span");
-						chip.className = "chip";
-						chip.textContent = permission;
-						chips.append(chip);
-					}
-					item.append(chips);
+				const tile = document.createElement("span");
+				tile.className = "c-icon";
+				if (entry.icon && ICONS[entry.icon]) {
+					tile.append(icon(entry.icon));
 				} else {
-					const chips = document.createElement("div");
-					chips.className = "chips";
-					const chip = document.createElement("span");
-					chip.className = "chip";
-					chip.textContent = "不需要权限";
-					chips.append(chip);
-					item.append(chips);
+					tile.dataset.letter = "";
+					tile.textContent = (entry.name ?? entry.id).slice(0, 1);
 				}
 
+				const title = document.createElement("div");
+				title.className = "c-title";
 				const url = installUrl(entry);
-				const actions = document.createElement("div");
-				actions.className = "card-actions";
+				const name = document.createElement("a");
+				name.className = "c-name";
+				name.href = url;
+				name.target = "_blank";
+				name.rel = "noreferrer noopener";
+				name.textContent = entry.name ?? entry.id;
+				name.title = entry.name ?? entry.id;
+				const by = document.createElement("div");
+				by.className = "c-by";
+				by.dataset.kind = entry.source;
+				const author = entry.author ?? entry.repo?.split("/")[0] ?? "";
+				by.append(icon(entry.source === "registry" ? "check" : "shield"), document.createTextNode(entry.source === "registry" ? `收录 · ${author}` : `社区 · ${author}`));
+				title.append(name, by);
+
 				const copy = document.createElement("button");
 				copy.type = "button";
-				copy.className = "small";
-				copy.textContent = "复制安装链接";
+				copy.className = "c-act";
+				copy.title = "复制安装链接";
+				copy.append(icon("copy"), document.createTextNode("复制"));
 				copy.addEventListener("click", async () => {
 					try {
 						await navigator.clipboard.writeText(url);
-						copy.textContent = "已复制";
+						copy.dataset.state = "done";
+						copy.replaceChildren(icon("check"), document.createTextNode("已复制"));
 						setTimeout(() => {
-							copy.textContent = "复制安装链接";
-						}, 1500);
+							delete copy.dataset.state;
+							copy.replaceChildren(icon("copy"), document.createTextNode("复制"));
+						}, 1600);
 					} catch {
-						setStatus("复制失败，请手动选中下面的链接。", "warn");
+						copy.dataset.state = "failed";
+						copy.replaceChildren(document.createTextNode("复制失败"));
+						copy.title = url;
 					}
 				});
-				const link = document.createElement("a");
-				link.href = url;
-				link.target = "_blank";
-				link.rel = "noreferrer noopener";
-				link.textContent = url.replace("https://github.com/", "");
-				const spacer = document.createElement("span");
-				spacer.className = "spacer";
-				actions.append(copy, spacer, link);
-				item.append(actions);
+
+				head.append(tile, title, copy);
+
+				const desc = document.createElement("p");
+				desc.className = "c-desc";
+				desc.textContent = entry.description ?? "";
+
+				const perms = document.createElement("div");
+				perms.className = "c-perms";
+				if (entry.permissions?.length) {
+					for (const permission of entry.permissions.slice(0, 2)) {
+						const chip = document.createElement("span");
+						chip.className = "chip";
+						chip.textContent = permission;
+						chip.title = permission;
+						perms.append(chip);
+					}
+					if (entry.permissions.length > 2) {
+						const more = document.createElement("span");
+						more.className = "chip";
+						more.dataset.more = "";
+						more.textContent = `+${entry.permissions.length - 2}`;
+						more.title = entry.permissions.join(" · ");
+						perms.append(more);
+					}
+				} else {
+					const chip = document.createElement("span");
+					chip.className = "chip";
+					chip.dataset.none = "";
+					chip.textContent = "零权限";
+					chip.title = "不需要任何权限";
+					perms.append(chip);
+				}
+
+				const foot = document.createElement("div");
+				foot.className = "c-foot";
+				const kind = KINDS[entry.presentations?.[0]] ?? null;
+				if (kind) {
+					const kindEl = document.createElement("span");
+					kindEl.className = "c-kind";
+					kindEl.append(icon(kind[0]), document.createTextNode(kind[1]));
+					foot.append(kindEl);
+				}
+				if (entry.version) {
+					const ver = document.createElement("span");
+					ver.className = "c-ver";
+					ver.textContent = entry.version;
+					foot.append(ver);
+				}
+				if (entry.stars) {
+					const stars = document.createElement("span");
+					stars.className = "c-stars";
+					stars.append(icon("star", "11px"), document.createTextNode(`${entry.stars}`));
+					stars.style.display = "inline-flex";
+					stars.style.alignItems = "center";
+					stars.style.gap = "3px";
+					foot.append(stars);
+				}
+
+				item.append(head, desc, perms, foot);
 				return item;
+			}
+
+			function group(title, note, entries) {
+				const section = document.createElement("section");
+				section.className = "group";
+				const head = document.createElement("div");
+				head.className = "group-head";
+				const heading = document.createElement("h2");
+				heading.textContent = title;
+				head.append(heading);
+				if (note) {
+					const noteEl = document.createElement("span");
+					noteEl.className = "group-note";
+					noteEl.textContent = note;
+					head.append(noteEl);
+				}
+				const grid = document.createElement("ul");
+				grid.className = "grid";
+				grid.append(...entries.map(pluginCard));
+				section.append(head, grid);
+				return section;
+			}
+
+			function skeleton() {
+				const section = document.createElement("section");
+				section.className = "group skeleton";
+				const grid = document.createElement("ul");
+				grid.className = "grid";
+				for (let i = 0; i < 8; i += 1) {
+					const item = document.createElement("li");
+					item.className = "sk-card";
+					const a = document.createElement("div");
+					a.className = "sk";
+					a.style.width = "34px";
+					a.style.height = "34px";
+					a.style.borderRadius = "9px";
+					const b = document.createElement("div");
+					b.className = "sk sk-line";
+					b.style.width = "58%";
+					const c = document.createElement("div");
+					c.className = "sk sk-line";
+					c.style.width = "92%";
+					const d = document.createElement("div");
+					d.className = "sk sk-line";
+					d.style.width = "80%";
+					const e = document.createElement("div");
+					e.className = "sk sk-line";
+					e.style.width = "36%";
+					item.append(a, b, c, d, e);
+					grid.append(item);
+				}
+				section.append(grid);
+				return section;
+			}
+
+			function renderNotice() {
+				const notice = el("notice");
+				if (!state.errors.length) {
+					notice.hidden = true;
+					notice.replaceChildren();
+					return;
+				}
+				notice.hidden = false;
+				const text = document.createElement("span");
+				const strong = document.createElement("strong");
+				strong.textContent = "部分来源加载失败。";
+				text.append(strong, document.createTextNode(` ${state.errors.join("｜")}`));
+				const retry = document.createElement("button");
+				retry.type = "button";
+				retry.textContent = "重试";
+				retry.addEventListener("click", load);
+				notice.replaceChildren(text, retry);
 			}
 
 			function render() {
 				const needle = state.query.trim().toLowerCase();
-				const entries = [
-					...(state.source === "github" ? [] : state.registry),
-					...(state.source === "registry" ? [] : state.github),
-				].filter((entry) => matches(entry, needle));
-				el("list").replaceChildren(...entries.map(card));
-				const summary = `收录 ${state.registry.length} 个 · 社区 ${state.github.length} 个 · 匹配 ${entries.length} 个`;
-				setStatus(state.githubWarning ? `${summary}｜${state.githubWarning}` : summary, state.githubWarning ? "warn" : undefined);
+				const registry = state.registry.filter((entry) => matches(entry, needle));
+				const github = state.github.filter((entry) => matches(entry, needle));
+				const showRegistry = state.source === "github" ? [] : registry;
+				const showGithub = state.source === "registry" ? [] : github;
+				const total = showRegistry.length + showGithub.length;
+
+				for (const node of document.querySelectorAll("[data-count]")) {
+					const key = node.dataset.count;
+					node.textContent = String(key === "all" ? registry.length + github.length : key === "registry" ? registry.length : github.length);
+				}
+
+				const results = el("results");
+				results.replaceChildren();
+				el("empty").hidden = true;
+
+				if (state.loading) {
+					results.append(skeleton());
+					setStatus("加载中…");
+					renderNotice();
+					return;
+				}
+
+				const nothingLoaded = state.errors.length > 0 && state.registry.length === 0 && state.github.length === 0;
+				if (total === 0 && !nothingLoaded) {
+					el("empty").hidden = false;
+					el("empty-title").textContent = state.query.trim() ? `没有匹配「${state.query.trim()}」的插件` : "这个来源下还没有插件";
+					el("empty-hint").textContent = state.query.trim() ? "换个关键词试试，或者切回全部来源。" : "给仓库打上 pideck-plugin topic，它就会出现在这里。";
+					el("clear").hidden = !state.query.trim();
+					el("show-all").hidden = state.source === "all";
+				} else {
+					if (showRegistry.length) results.append(group("官方收录", "人工核对过 manifest 与权限", showRegistry));
+					if (showGithub.length) results.append(group("社区 · 未审阅", "GitHub topic 自动抓取，PiDeck 不背书", showGithub));
+				}
+
+				const filtering = Boolean(state.query.trim()) || state.source !== "all";
+				setStatus(filtering ? `匹配 ${total} 个` : `收录 ${state.registry.length} 个 · 社区 ${state.github.length} 个`);
+				renderNotice();
 			}
 
 			for (const button of document.querySelectorAll("[data-source]")) {
@@ -432,15 +1032,45 @@
 				state.query = event.target.value;
 				render();
 			});
+			el("clear").addEventListener("click", () => {
+				state.query = "";
+				el("query").value = "";
+				el("query").focus();
+				render();
+			});
+			el("show-all").addEventListener("click", () => {
+				state.source = "all";
+				for (const other of document.querySelectorAll("[data-source]")) other.setAttribute("aria-pressed", String(other.dataset.source === "all"));
+				render();
+			});
+			document.addEventListener("keydown", (event) => {
+				const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? "");
+				if (event.key === "/" && !typing) {
+					event.preventDefault();
+					el("query").focus();
+				} else if (event.key === "Escape" && document.activeElement === el("query")) {
+					state.query = "";
+					el("query").value = "";
+					el("query").blur();
+					render();
+				}
+			});
 
-			const [registry, github] = await Promise.allSettled([loadRegistry(), loadGitHub()]);
-			if (registry.status === "fulfilled") state.registry = (registry.value.plugins ?? []).map((entry) => ({ ...entry, source: "registry" }));
-			if (github.status === "fulfilled") state.github = github.value;
-			const warnings = [];
-			if (registry.status === "rejected") warnings.push(`收录表加载失败：${registry.reason?.message ?? registry.reason}`);
-			if (github.status === "rejected") warnings.push(`社区来源加载失败：${github.reason?.message ?? github.reason}`);
-			state.githubWarning = warnings.join("｜");
+			async function load() {
+				state.loading = true;
+				state.errors = [];
+				render();
+				const [registry, github] = await Promise.allSettled([loadRegistry(), loadGitHub()]);
+				state.loading = false;
+				if (registry.status === "fulfilled") state.registry = (registry.value.plugins ?? []).map((entry) => ({ ...entry, source: "registry" }));
+				else state.errors.push(`收录表加载失败：${registry.reason?.message ?? registry.reason}`);
+				if (github.status === "fulfilled") state.github = github.value;
+				else state.errors.push(`社区来源加载失败：${github.reason?.message ?? github.reason}`);
+				render();
+			}
+
 			render();
+			load();
 		</script>
 	</body>
 </html>

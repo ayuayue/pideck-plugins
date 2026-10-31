@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"apiVersion": 1,
+	"id": "my-network-panel",
+	"name": "{{name}}",
+	"version": "0.1.0",
+	"description": "从白名单 origin 拉一个 JSON 并展示；演示 network.https 的声明方式与错误处理。",
+	"permissions": ["network.https"],
+	"network": {
+		"httpsOrigins": ["https://api.github.com"]
+	},
+	"contributes": {
+		"panels": [
+			{
+				"id": "main",
+				"title": "{{name}}",
+				"entry": "app.html",
+				"icon": "globe",
+				"presentation": "modal"
+			}
+		],
+		"commands": [{ "id": "open", "title": "{{name}}", "panelId": "main" }]
+	}
+}

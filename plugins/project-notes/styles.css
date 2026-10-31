@@ -1,0 +1,219 @@
+/* 项目便签 — 样式。popover 形态：宿主给的浮层宽度有限，纵向排布。 */
+
+:root {
+	--pn-sans: var(--font-family-base, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif);
+	--pn-fs-micro: var(--font-size-micro, 11px);
+	--pn-fs-caption: var(--font-size-caption, 12px);
+	--pn-fs-control: var(--font-size-control, 13px);
+	--pn-fs-title: var(--font-size-title, 16px);
+	--pn-radius-sm: var(--radius-sm, 6px);
+	--pn-radius-md: var(--radius-md, 8px);
+	--pn-radius-lg: var(--radius-lg, 10px);
+	--pn-ctl-md: var(--control-height-md, 32px);
+
+	--pn-bg-app: var(--color-bg-app, #ffffff);
+	--pn-bg-panel: var(--color-bg-panel, #ffffff);
+	--pn-bg-input: var(--color-bg-input, #ffffff);
+	--pn-bg-muted: var(--color-bg-muted, #f4f4f4);
+	--pn-bg-hover: var(--color-bg-hover, #eaeaea);
+	--pn-text-primary: var(--color-text-primary, #202124);
+	--pn-text-tertiary: var(--color-text-tertiary, #666666);
+	--pn-text-faint: var(--color-text-faint, #9a9a9a);
+	--pn-text-inverse: var(--color-text-inverse, #ffffff);
+	--pn-border-subtle: var(--color-border-subtle, rgba(13, 13, 13, 0.1));
+	--pn-border-default: var(--color-border-default, rgba(13, 13, 13, 0.13));
+	--pn-accent: var(--color-accent, #18181b);
+	--pn-accent-strong: var(--color-accent-strong, #09090b);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	--pn-bg-app: var(--color-bg-app, #121212);
+	--pn-bg-panel: var(--color-bg-panel, #1a1a1a);
+	--pn-bg-input: var(--color-bg-input, #1a1a1a);
+	--pn-bg-muted: var(--color-bg-muted, #262626);
+	--pn-bg-hover: var(--color-bg-hover, #262626);
+	--pn-text-primary: var(--color-text-primary, #ecece7);
+	--pn-text-tertiary: var(--color-text-tertiary, #9a9a94);
+	--pn-text-faint: var(--color-text-faint, #a0a09a);
+	--pn-text-inverse: var(--color-text-inverse, #121212);
+	--pn-border-subtle: var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+	--pn-border-default: var(--color-border-default, rgba(255, 255, 255, 0.09));
+	--pn-accent: var(--color-accent, #fafafa);
+	--pn-accent-strong: var(--color-accent-strong, #e4e4e7);
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--pn-bg-app: #121212;
+		--pn-bg-panel: #1a1a1a;
+		--pn-bg-input: #1a1a1a;
+		--pn-bg-muted: #262626;
+		--pn-bg-hover: #262626;
+		--pn-text-primary: #ecece7;
+		--pn-text-tertiary: #9a9a94;
+		--pn-text-faint: #a0a09a;
+		--pn-text-inverse: #121212;
+		--pn-border-subtle: rgba(255, 255, 255, 0.05);
+		--pn-border-default: rgba(255, 255, 255, 0.09);
+		--pn-accent: #fafafa;
+		--pn-accent-strong: #e4e4e7;
+		color-scheme: dark;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+	padding: 12px;
+	max-height: 100vh;
+	background: var(--pn-bg-app);
+	color: var(--pn-text-primary);
+	font-family: var(--pn-sans);
+	font-size: var(--pn-fs-control);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+button,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+.head h1 {
+	margin: 0;
+	font-size: var(--pn-fs-title);
+	font-weight: 600;
+}
+
+.head p {
+	margin: 2px 0 0;
+	font-size: var(--pn-fs-caption);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.muted {
+	color: var(--pn-text-tertiary);
+}
+
+.composer {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+textarea {
+	width: 100%;
+	padding: 6px 8px;
+	border: 1px solid var(--pn-border-default);
+	border-radius: var(--pn-radius-md);
+	background: var(--pn-bg-input);
+	font-size: var(--pn-fs-caption);
+	resize: vertical;
+}
+
+textarea:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--pn-accent);
+	outline-offset: 1px;
+}
+
+button {
+	height: var(--pn-ctl-md);
+	padding: 0 10px;
+	border: 1px solid var(--pn-border-default);
+	border-radius: var(--pn-radius-md);
+	background: var(--pn-bg-panel);
+	cursor: pointer;
+}
+
+button:hover {
+	background: var(--pn-bg-hover);
+}
+
+.composer button {
+	border-color: transparent;
+	background: var(--pn-accent);
+	color: var(--pn-text-inverse);
+}
+
+.composer button:hover {
+	background: var(--pn-accent-strong);
+}
+
+.message {
+	margin: 0;
+	font-size: var(--pn-fs-caption);
+	color: var(--pn-text-tertiary);
+}
+
+.notes {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1 1 auto;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	list-style: none;
+}
+
+.note {
+	padding: 8px 10px;
+	border: 1px solid var(--pn-border-subtle);
+	border-radius: var(--pn-radius-lg);
+	background: var(--pn-bg-panel);
+}
+
+.note-text {
+	margin: 0;
+	font-size: var(--pn-fs-control);
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.note-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	margin-top: 4px;
+	font-size: var(--pn-fs-micro);
+}
+
+button.link {
+	height: auto;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--pn-text-faint);
+	font-size: var(--pn-fs-micro);
+}
+
+button.link:hover {
+	background: none;
+	color: var(--pn-text-primary);
+	text-decoration: underline;
+}
+
+.footer {
+	margin: 0;
+	font-size: var(--pn-fs-micro);
+	color: var(--pn-text-faint);
+	font-variant-numeric: tabular-nums;
+}

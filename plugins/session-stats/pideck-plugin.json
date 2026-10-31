@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"apiVersion": 1,
+	"id": "session-stats",
+	"name": "会话统计",
+	"version": "0.1.0",
+	"description": "把工作区里的会话汇总成看板：总数、可读性、按目录/模型/后端分布、近 14 天活跃度。",
+	"permissions": ["sessions.read", "sessions.read.workspace"],
+	"contributes": {
+		"panels": [
+			{
+				"id": "main",
+				"title": "会话统计",
+				"entry": "app.html",
+				"icon": "bar-chart",
+				"presentation": "page"
+			}
+		],
+		"commands": [{ "id": "open", "title": "打开会话统计", "panelId": "main" }]
+	}
+}

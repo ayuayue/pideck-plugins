@@ -1,0 +1,91 @@
+/* 样式只消费 PiDeck 注入的 --color-* / --radius-* / --font-* 变量，并且每个都带兜底值。
+   兜底值是为了「脱离 PiDeck 在普通浏览器里调样式」也能看，不是默认主题：
+   宿主注入了变量时，兜底值不生效。 */
+:root {
+	color-scheme: light dark;
+	--bg: var(--color-bg-popover, #ffffff);
+	--fg: var(--color-text-primary, #18181b);
+	--muted: var(--color-text-tertiary, #71717a);
+	--line: var(--color-border-subtle, #e4e4e7);
+	--card: var(--color-bg-muted, #f4f4f5);
+	--accent: var(--color-accent, #2563eb);
+	--accent-fg: var(--color-text-inverse, #ffffff);
+	--radius: var(--radius-md, 8px);
+	--font: var(--font-family-base, -apple-system, "Segoe UI", "Microsoft YaHei UI", sans-serif);
+	--fs-caption: var(--font-size-caption, 12px);
+	--fs-title: var(--font-size-title, 16px);
+	--ctl: var(--control-height-sm, 28px);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: var(--color-bg-popover, #1c1c1f);
+		--fg: var(--color-text-primary, #e6e6e6);
+		--muted: var(--color-text-tertiary, #a1a1aa);
+		--line: var(--color-border-subtle, #2e2e33);
+		--card: var(--color-bg-muted, #26262a);
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+body {
+	margin: 0;
+	padding: 12px;
+	background: var(--bg);
+	color: var(--fg);
+	font: var(--fs-caption) / 1.5 var(--font);
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.scope {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	color: var(--muted);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.count {
+	margin: 10px 0 0;
+	font-size: var(--fs-title);
+	font-variant-numeric: tabular-nums;
+}
+
+.hint {
+	margin: 6px 0 0;
+	color: var(--muted);
+}
+
+button {
+	height: var(--ctl);
+	padding: 0 10px;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background: var(--card);
+	color: var(--fg);
+	font: inherit;
+	cursor: pointer;
+}
+
+button:hover {
+	border-color: var(--accent);
+}
+
+button.primary {
+	border-color: var(--accent);
+	background: var(--accent);
+	color: var(--accent-fg);
+}

@@ -1,0 +1,200 @@
+/* 网络面板 — 模板样式。modal 形态：内容自己撑开，靠宿主给的弹框外壳限宽。 */
+
+:root {
+	--np-sans: var(--font-family-base, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif);
+	--np-mono: var(--font-family-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+	--np-fs-micro: var(--font-size-micro, 11px);
+	--np-fs-caption: var(--font-size-caption, 12px);
+	--np-fs-control: var(--font-size-control, 13px);
+	--np-fs-title: var(--font-size-title, 16px);
+	--np-radius-md: var(--radius-md, 8px);
+	--np-radius-lg: var(--radius-lg, 10px);
+	--np-ctl-md: var(--control-height-md, 32px);
+
+	--np-bg-app: var(--color-bg-app, #ffffff);
+	--np-bg-panel: var(--color-bg-panel, #ffffff);
+	--np-bg-input: var(--color-bg-input, #ffffff);
+	--np-bg-muted: var(--color-bg-muted, #f4f4f4);
+	--np-bg-hover: var(--color-bg-hover, #eaeaea);
+	--np-text-primary: var(--color-text-primary, #202124);
+	--np-text-tertiary: var(--color-text-tertiary, #666666);
+	--np-text-inverse: var(--color-text-inverse, #ffffff);
+	--np-border-subtle: var(--color-border-subtle, rgba(13, 13, 13, 0.1));
+	--np-border-default: var(--color-border-default, rgba(13, 13, 13, 0.13));
+	--np-accent: var(--color-accent, #18181b);
+	--np-accent-strong: var(--color-accent-strong, #09090b);
+	--np-danger: var(--color-danger, #b42318);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	--np-bg-app: var(--color-bg-app, #121212);
+	--np-bg-panel: var(--color-bg-panel, #1a1a1a);
+	--np-bg-input: var(--color-bg-input, #1a1a1a);
+	--np-bg-muted: var(--color-bg-muted, #262626);
+	--np-bg-hover: var(--color-bg-hover, #262626);
+	--np-text-primary: var(--color-text-primary, #ecece7);
+	--np-text-tertiary: var(--color-text-tertiary, #9a9a94);
+	--np-text-inverse: var(--color-text-inverse, #121212);
+	--np-border-subtle: var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+	--np-border-default: var(--color-border-default, rgba(255, 255, 255, 0.09));
+	--np-accent: var(--color-accent, #fafafa);
+	--np-accent-strong: var(--color-accent-strong, #e4e4e7);
+	--np-danger: var(--color-danger, #f87171);
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--np-bg-app: #121212;
+		--np-bg-panel: #1a1a1a;
+		--np-bg-input: #1a1a1a;
+		--np-bg-muted: #262626;
+		--np-bg-hover: #262626;
+		--np-text-primary: #ecece7;
+		--np-text-tertiary: #9a9a94;
+		--np-text-inverse: #121212;
+		--np-border-subtle: rgba(255, 255, 255, 0.05);
+		--np-border-default: rgba(255, 255, 255, 0.09);
+		--np-accent: #fafafa;
+		--np-accent-strong: #e4e4e7;
+		--np-danger: #f87171;
+		color-scheme: dark;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+	padding: 14px;
+	background: var(--np-bg-app);
+	color: var(--np-text-primary);
+	font-family: var(--np-sans);
+	font-size: var(--np-fs-control);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+button,
+input {
+	font: inherit;
+	color: inherit;
+}
+
+.head h1 {
+	margin: 0;
+	font-size: var(--np-fs-title);
+	font-weight: 600;
+}
+
+.head p {
+	margin: 2px 0 0;
+	font-size: var(--np-fs-caption);
+}
+
+.muted {
+	color: var(--np-text-tertiary);
+}
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 8px;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1 1 200px;
+	min-width: 0;
+}
+
+.field span {
+	font-size: var(--np-fs-caption);
+	color: var(--np-text-tertiary);
+}
+
+input[type="text"] {
+	width: 100%;
+	height: var(--np-ctl-md);
+	padding: 0 10px;
+	border: 1px solid var(--np-border-default);
+	border-radius: var(--np-radius-md);
+	background: var(--np-bg-input);
+	font-family: var(--np-mono);
+}
+
+button {
+	height: var(--np-ctl-md);
+	padding: 0 12px;
+	border: 1px solid var(--np-border-default);
+	border-radius: var(--np-radius-md);
+	background: var(--np-bg-panel);
+	cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+	background: var(--np-bg-hover);
+}
+
+button.primary {
+	border-color: transparent;
+	background: var(--np-accent);
+	color: var(--np-text-inverse);
+}
+
+button.primary:hover:not(:disabled) {
+	background: var(--np-accent-strong);
+}
+
+button:disabled,
+body[data-busy="true"] {
+	cursor: progress;
+}
+
+input:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--np-accent);
+	outline-offset: 1px;
+}
+
+.message {
+	margin: 0;
+	min-height: 1.5em;
+	font-size: var(--np-fs-caption);
+	color: var(--np-text-tertiary);
+}
+
+.result {
+	max-height: 320px;
+	margin: 0;
+	overflow: auto;
+	padding: 10px;
+	border: 1px solid var(--np-border-subtle);
+	border-radius: var(--np-radius-lg);
+	background: var(--np-bg-muted);
+	font-family: var(--np-mono);
+	font-size: var(--np-fs-caption);
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+code {
+	padding: 1px 4px;
+	border-radius: 4px;
+	background: var(--np-bg-muted);
+	font-family: var(--np-mono);
+	font-size: var(--np-fs-micro);
+}

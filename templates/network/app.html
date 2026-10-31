@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>我的网络面板</title>
+	</head>
+	<body>
+		<header class="head">
+			<h1 id="heading">我的网络面板</h1>
+			<p id="subtitle" class="muted">只允许访问 https://api.github.com</p>
+		</header>
+
+		<form id="form" class="toolbar">
+			<label class="field">
+				<span id="label">仓库</span>
+				<input id="repo" type="text" value="ayuayue/PiDeck" spellcheck="false" autocomplete="off" />
+			</label>
+			<button id="go" type="submit" class="primary">查询</button>
+		</form>
+
+		<p id="status" class="message" hidden></p>
+		<pre id="result" class="result" hidden></pre>
+		<p id="idle" class="muted">填一个 <code>owner/repo</code> 然后点查询。</p>
+
+		<script type="module" src="app.js"></script>
+	</body>
+</html>

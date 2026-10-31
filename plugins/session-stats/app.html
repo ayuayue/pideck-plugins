@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>会话统计</title>
+	</head>
+	<body>
+		<header class="head">
+			<div>
+				<h1 id="heading">会话统计</h1>
+				<p id="subtitle" class="muted">—</p>
+			</div>
+			<div class="head-actions">
+				<label class="toggle"><input id="only-project" type="checkbox" /><span id="only-project-label">只看当前项目</span></label>
+				<button id="reload" type="button">刷新</button>
+			</div>
+		</header>
+
+		<p id="status" class="message" hidden></p>
+
+		<div id="summary" class="cards"></div>
+
+		<div class="grid">
+			<section class="block">
+				<h2 id="title-dirs">按目录</h2>
+				<div id="dirs" class="bars"></div>
+			</section>
+			<section class="block">
+				<h2 id="title-models">按模型</h2>
+				<div id="models" class="bars"></div>
+			</section>
+			<section class="block">
+				<h2 id="title-backends">按后端</h2>
+				<div id="backends" class="bars"></div>
+			</section>
+			<section class="block">
+				<h2 id="title-activity">近 14 天活跃</h2>
+				<div id="activity" class="spark"></div>
+			</section>
+		</div>
+
+		<script type="module" src="app.js"></script>
+	</body>
+</html>

@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"apiVersion": 1,
+	"id": "my-plugin",
+	"name": "{{name}}",
+	"version": "0.1.0",
+	"description": "最小可运行的 PiDeck 宿主插件：读上下文、存一份 JSON、跟随宿主主题。",
+	"permissions": [],
+	"contributes": {
+		"panels": [
+			{
+				"id": "main",
+				"title": "{{name}}",
+				"entry": "app.html",
+				"icon": "message",
+				"presentation": "popover"
+			}
+		],
+		"commands": [{ "id": "open", "title": "{{name}}", "panelId": "main" }]
+	}
+}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>我的会话面板</title>
+	</head>
+	<body>
+		<main class="panel">
+			<aside class="col list-col">
+				<form id="search-form" class="toolbar" role="search">
+					<input id="query" type="search" placeholder="搜索标题…" autocomplete="off" />
+				</form>
+				<p id="scope" class="scope">—</p>
+				<div id="list" class="list" role="list"></div>
+				<button id="more" type="button" class="wide" hidden>加载更多</button>
+				<p id="list-message" class="message" hidden></p>
+			</aside>
+
+			<section class="col detail-col">
+				<p id="empty" class="empty">从左边选一个会话。</p>
+				<div id="detail" hidden>
+					<h1 id="title"></h1>
+					<p id="meta" class="meta"></p>
+					<div class="toolbar">
+						<button id="open" type="button" class="primary">在 PiDeck 中打开</button>
+					</div>
+					<div id="history" class="history"></div>
+					<button id="more-history" type="button" class="wide" hidden>更早的历史</button>
+					<p id="detail-message" class="message" hidden></p>
+				</div>
+			</section>
+		</main>
+		<script type="module" src="app.js"></script>
+	</body>
+</html>

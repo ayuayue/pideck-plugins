@@ -1,0 +1,20 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # 校验每个插件/模板的 manifest 与包预算，并核对 registry.json 与 manifest 一致。
+      - run: node scripts/validate.mjs
+      # 打包一遍，确保归档能生成（也顺带验证逐文件 sha256 的路径）。
+      - run: node scripts/pack-all.mjs dist

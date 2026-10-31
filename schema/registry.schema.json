@@ -1,0 +1,62 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://raw.githubusercontent.com/ayuayue/pideck-plugins/main/schema/registry.schema.json",
+	"title": "PiDeck 插件收录表",
+	"description": "pideck-plugins 仓库的 registry.json。字段口径见 docs/registry.md；name/version/description/permissions/icon/presentations 由每个插件的 pideck-plugin.json 派生，用 node scripts/validate.mjs --fix 回填。",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["schemaVersion", "plugins"],
+	"properties": {
+		"schemaVersion": { "const": 1 },
+		"plugins": {
+			"type": "array",
+			"items": { "$ref": "#/$defs/entry" }
+		}
+	},
+	"$defs": {
+		"entry": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["id", "name", "version", "permissions", "author", "license", "repo"],
+			"properties": {
+				"id": {
+					"type": "string",
+					"pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$",
+					"maxLength": 80,
+					"description": "必须同时是 plugins/ 下的目录名和该插件 manifest 的 id。"
+				},
+				"name": { "type": "string", "maxLength": 160, "description": "派生自 manifest。" },
+				"version": { "type": "string", "maxLength": 160, "description": "派生自 manifest；只用于展示，授权不看它。" },
+				"description": { "type": "string", "maxLength": 1000, "description": "派生自 manifest。" },
+				"permissions": {
+					"type": "array",
+					"description": "派生自 manifest。市场列表直接展示，避免用户装完才知道要什么权限。",
+					"items": {
+						"enum": ["sessions.read", "sessions.read.workspace", "workbench.navigate", "workbench.openExternal", "network.https", "network.local", "service.local", "sessionGroups.manage"]
+					}
+				},
+				"icon": {
+					"type": "string",
+					"description": "派生自第一个面板。",
+					"enum": ["bar-chart", "activity", "database", "table", "calendar", "file-text", "terminal", "globe", "git-branch", "message", "clock", "layers"]
+				},
+				"presentations": {
+					"type": "array",
+					"description": "派生自 manifest：所有面板形态去重后的列表。",
+					"items": { "enum": ["modal", "popover", "page"] }
+				},
+				"author": { "type": "string", "minLength": 1, "maxLength": 160, "description": "手写：收录时填真人或组织名。" },
+				"license": { "type": "string", "minLength": 1, "maxLength": 40, "description": "手写：SPDX 标识符，如 MIT / Apache-2.0。" },
+				"repo": {
+					"type": "string",
+					"pattern": "^[A-Za-z0-9._-]{1,100}/[A-Za-z0-9._-]{1,100}$",
+					"description": "手写：owner/name。安装时从这里拼 GitHub 链接，不写完整 URL。"
+				},
+				"ref": { "type": "string", "pattern": "^[A-Za-z0-9._/-]{1,120}$", "description": "手写：分支或 tag，缺省用仓库默认分支。" },
+				"subpath": { "type": "string", "pattern": "^[A-Za-z0-9._/-]{1,240}$", "description": "手写：插件在仓库里的子目录（单仓库多插件时必须写）。" },
+				"homepage": { "type": "string", "pattern": "^https://", "description": "手写：给人看的页面。" },
+				"tags": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "手写：搜索关键词。" }
+			}
+		}
+	}
+}

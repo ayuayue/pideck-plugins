@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"apiVersion": 1,
+	"id": "project-notes",
+	"name": "项目便签",
+	"version": "0.1.0",
+	"description": "给每个项目记几条便签，按项目分别保存在插件自己的存储里；不需要任何权限。",
+	"permissions": [],
+	"contributes": {
+		"panels": [
+			{
+				"id": "main",
+				"title": "项目便签",
+				"entry": "app.html",
+				"icon": "file-text",
+				"presentation": "popover"
+			}
+		],
+		"commands": [{ "id": "open", "title": "打开项目便签", "panelId": "main" }]
+	}
+}

@@ -1,0 +1,279 @@
+/* 会话统计 — 样式。颜色/圆角/控件高度/字号全部来自宿主注入的变量（读进本插件自己的 --ss-* 命名空间）。 */
+
+:root {
+	--ss-sans: var(--font-family-base, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif);
+	--ss-mono: var(--font-family-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+	--ss-fs-micro: var(--font-size-micro, 11px);
+	--ss-fs-caption: var(--font-size-caption, 12px);
+	--ss-fs-control: var(--font-size-control, 13px);
+	--ss-fs-body: var(--font-size-body, 14px);
+	--ss-fs-title: var(--font-size-title, 16px);
+	--ss-radius-md: var(--radius-md, 8px);
+	--ss-radius-lg: var(--radius-lg, 10px);
+	--ss-radius-pill: var(--radius-pill, 999px);
+	--ss-ctl-md: var(--control-height-md, 32px);
+
+	--ss-bg-app: var(--color-bg-app, #ffffff);
+	--ss-bg-panel: var(--color-bg-panel, #ffffff);
+	--ss-bg-muted: var(--color-bg-muted, #f4f4f4);
+	--ss-bg-hover: var(--color-bg-hover, #eaeaea);
+	--ss-text-primary: var(--color-text-primary, #202124);
+	--ss-text-tertiary: var(--color-text-tertiary, #666666);
+	--ss-text-faint: var(--color-text-faint, #9a9a9a);
+	--ss-text-inverse: var(--color-text-inverse, #ffffff);
+	--ss-border-subtle: var(--color-border-subtle, rgba(13, 13, 13, 0.1));
+	--ss-border-default: var(--color-border-default, rgba(13, 13, 13, 0.13));
+	--ss-accent: var(--color-accent, #18181b);
+	--ss-accent-strong: var(--color-accent-strong, #09090b);
+	--ss-accent-soft: var(--color-accent-soft, #e5e7eb);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	--ss-bg-app: var(--color-bg-app, #121212);
+	--ss-bg-panel: var(--color-bg-panel, #1a1a1a);
+	--ss-bg-muted: var(--color-bg-muted, #262626);
+	--ss-bg-hover: var(--color-bg-hover, #262626);
+	--ss-text-primary: var(--color-text-primary, #ecece7);
+	--ss-text-tertiary: var(--color-text-tertiary, #9a9a94);
+	--ss-text-faint: var(--color-text-faint, #a0a09a);
+	--ss-text-inverse: var(--color-text-inverse, #121212);
+	--ss-border-subtle: var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+	--ss-border-default: var(--color-border-default, rgba(255, 255, 255, 0.09));
+	--ss-accent: var(--color-accent, #fafafa);
+	--ss-accent-strong: var(--color-accent-strong, #e4e4e7);
+	--ss-accent-soft: var(--color-accent-soft, #2a2a2a);
+	color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--ss-bg-app: #121212;
+		--ss-bg-panel: #1a1a1a;
+		--ss-bg-muted: #262626;
+		--ss-bg-hover: #262626;
+		--ss-text-primary: #ecece7;
+		--ss-text-tertiary: #9a9a94;
+		--ss-text-faint: #a0a09a;
+		--ss-text-inverse: #121212;
+		--ss-border-subtle: rgba(255, 255, 255, 0.05);
+		--ss-border-default: rgba(255, 255, 255, 0.09);
+		--ss-accent: #fafafa;
+		--ss-accent-strong: #e4e4e7;
+		--ss-accent-soft: #2a2a2a;
+		color-scheme: dark;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 16px;
+	background: var(--ss-bg-app);
+	color: var(--ss-text-primary);
+	font-family: var(--ss-sans);
+	font-size: var(--ss-fs-control);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+button,
+input {
+	font: inherit;
+	color: inherit;
+}
+
+.head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.head h1 {
+	margin: 0;
+	font-size: var(--ss-fs-title);
+	font-weight: 600;
+}
+
+.head p {
+	margin: 2px 0 0;
+	font-size: var(--ss-fs-caption);
+}
+
+.head-actions {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.muted {
+	color: var(--ss-text-tertiary);
+}
+
+.toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: var(--ss-fs-caption);
+	color: var(--ss-text-tertiary);
+	cursor: pointer;
+}
+
+button {
+	height: var(--ss-ctl-md);
+	padding: 0 10px;
+	border: 1px solid var(--ss-border-default);
+	border-radius: var(--ss-radius-md);
+	background: var(--ss-bg-panel);
+	cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+	background: var(--ss-bg-hover);
+}
+
+button:disabled {
+	cursor: progress;
+}
+
+button:focus-visible,
+input:focus-visible {
+	outline: 2px solid var(--ss-accent);
+	outline-offset: 1px;
+}
+
+.message {
+	margin: 0 0 12px;
+	font-size: var(--ss-fs-caption);
+	color: var(--ss-text-tertiary);
+}
+
+/* ---------- 概览卡片 ---------- */
+.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 10px 12px;
+	border: 1px solid var(--ss-border-subtle);
+	border-radius: var(--ss-radius-lg);
+	background: var(--ss-bg-panel);
+}
+
+.card strong {
+	font-size: calc(var(--ss-fs-title) * 1.5);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
+}
+
+.card span {
+	font-size: var(--ss-fs-micro);
+}
+
+/* ---------- 分布 ---------- */
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 14px;
+}
+
+.block h2 {
+	margin: 0 0 8px;
+	font-size: var(--ss-fs-body);
+	font-weight: 600;
+}
+
+.bars {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.bar {
+	display: grid;
+	grid-template-columns: minmax(0, 96px) minmax(0, 1fr) 36px;
+	align-items: center;
+	gap: 8px;
+	font-size: var(--ss-fs-caption);
+}
+
+.bar-label {
+	overflow: hidden;
+	color: var(--ss-text-tertiary);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.bar-track {
+	overflow: hidden;
+	height: 8px;
+	border-radius: var(--ss-radius-pill);
+	background: var(--ss-bg-muted);
+}
+
+.bar-fill {
+	display: block;
+	height: 100%;
+	border-radius: var(--ss-radius-pill);
+	background: var(--ss-accent-soft);
+}
+
+.bar-value {
+	font-family: var(--ss-mono);
+	font-size: var(--ss-fs-micro);
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+}
+
+/* ---------- 活跃度 ---------- */
+.spark {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 96px;
+}
+
+.day {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 4px;
+	flex: 1 1 0;
+	height: 100%;
+	min-width: 0;
+}
+
+.day-fill {
+	width: 100%;
+	border-radius: var(--ss-radius-md) var(--ss-radius-md) 2px 2px;
+	background: var(--ss-accent-soft);
+}
+
+.day-fill[data-empty="true"] {
+	background: var(--ss-bg-muted);
+}
+
+.day-label {
+	font-size: 9px;
+	font-variant-numeric: tabular-nums;
+	color: var(--ss-text-faint);
+	white-space: nowrap;
+}

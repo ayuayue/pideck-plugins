@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"apiVersion": 1,
+	"id": "my-sessions-panel",
+	"name": "{{name}}",
+	"version": "0.1.0",
+	"description": "列出当前项目的会话并预览最近历史；演示分页、事件刷新与工作台跳转。",
+	"permissions": ["sessions.read", "workbench.navigate"],
+	"contributes": {
+		"panels": [
+			{
+				"id": "main",
+				"title": "{{name}}",
+				"entry": "app.html",
+				"icon": "message",
+				"presentation": "page"
+			}
+		],
+		"commands": [{ "id": "open", "title": "{{name}}", "panelId": "main" }]
+	}
+}

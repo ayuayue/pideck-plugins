@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="styles.css" />
+		<title>项目便签</title>
+	</head>
+	<body>
+		<header class="head">
+			<h1 id="heading">项目便签</h1>
+			<p id="scope" class="muted">—</p>
+		</header>
+
+		<form id="form" class="composer">
+			<textarea id="text" rows="2" maxlength="2000" placeholder="记点什么…"></textarea>
+			<button id="add" type="submit">添加</button>
+		</form>
+
+		<p id="status" class="message" hidden></p>
+		<ul id="notes" class="notes"></ul>
+		<p id="footer" class="footer"></p>
+
+		<script type="module" src="app.js"></script>
+	</body>
+</html>

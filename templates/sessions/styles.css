@@ -1,0 +1,325 @@
+/* 会话面板 — 模板样式。
+   颜色 / 圆角 / 阴影 / 控件高度 / 字号 / 字体全部取自宿主注入的 CSS 变量，
+   但只把它们读进本模板自己的 --sp-* 命名空间（不要在 :root 上重定义 --color-*，
+   那会和宿主的注入值打架）。每个变量都带一份亮/暗兜底值，纯浏览器预览也不掉色。 */
+
+:root {
+	--sp-sans: var(--font-family-base, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif);
+	--sp-mono: var(--font-family-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+	--sp-fs-micro: var(--font-size-micro, 11px);
+	--sp-fs-caption: var(--font-size-caption, 12px);
+	--sp-fs-control: var(--font-size-control, 13px);
+	--sp-fs-body: var(--font-size-body, 14px);
+	--sp-fs-title: var(--font-size-title, 16px);
+	--sp-radius-sm: var(--radius-sm, 6px);
+	--sp-radius-md: var(--radius-md, 8px);
+	--sp-radius-lg: var(--radius-lg, 10px);
+	--sp-radius-pill: var(--radius-pill, 999px);
+	--sp-ctl-sm: var(--control-height-sm, 28px);
+	--sp-ctl-md: var(--control-height-md, 32px);
+	--sp-ctl-lg: var(--control-height-lg, 36px);
+
+	/* 亮色兜底（与宿主默认主题同值） */
+	--sp-bg-app: var(--color-bg-app, #ffffff);
+	--sp-bg-panel: var(--color-bg-panel, #ffffff);
+	--sp-bg-input: var(--color-bg-input, #ffffff);
+	--sp-bg-muted: var(--color-bg-muted, #f4f4f4);
+	--sp-bg-hover: var(--color-bg-hover, #eaeaea);
+	--sp-bg-active: var(--color-bg-active, #e4e4e4);
+	--sp-text-primary: var(--color-text-primary, #202124);
+	--sp-text-secondary: var(--color-text-secondary, #4a4a4a);
+	--sp-text-tertiary: var(--color-text-tertiary, #666666);
+	--sp-text-faint: var(--color-text-faint, #9a9a9a);
+	--sp-text-inverse: var(--color-text-inverse, #ffffff);
+	--sp-border-subtle: var(--color-border-subtle, rgba(13, 13, 13, 0.1));
+	--sp-border-default: var(--color-border-default, rgba(13, 13, 13, 0.13));
+	--sp-accent: var(--color-accent, #18181b);
+	--sp-accent-strong: var(--color-accent-strong, #09090b);
+	--sp-accent-soft: var(--color-accent-soft, #e5e7eb);
+	--sp-danger: var(--color-danger, #b42318);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+	--sp-bg-app: var(--color-bg-app, #121212);
+	--sp-bg-panel: var(--color-bg-panel, #1a1a1a);
+	--sp-bg-input: var(--color-bg-input, #1a1a1a);
+	--sp-bg-muted: var(--color-bg-muted, #262626);
+	--sp-bg-hover: var(--color-bg-hover, #262626);
+	--sp-bg-active: var(--color-bg-active, #333333);
+	--sp-text-primary: var(--color-text-primary, #ecece7);
+	--sp-text-secondary: var(--color-text-secondary, #b8b8b2);
+	--sp-text-tertiary: var(--color-text-tertiary, #9a9a94);
+	--sp-text-faint: var(--color-text-faint, #a0a09a);
+	--sp-text-inverse: var(--color-text-inverse, #121212);
+	--sp-border-subtle: var(--color-border-subtle, rgba(255, 255, 255, 0.05));
+	--sp-border-default: var(--color-border-default, rgba(255, 255, 255, 0.09));
+	--sp-accent: var(--color-accent, #fafafa);
+	--sp-accent-strong: var(--color-accent-strong, #e4e4e7);
+	--sp-accent-soft: var(--color-accent-soft, #2a2a2a);
+	--sp-danger: var(--color-danger, #f87171);
+	color-scheme: dark;
+}
+
+/* 宿主没有 data-theme 时（脱离 PiDeck 预览）跟随系统 */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		--sp-bg-app: #121212;
+		--sp-bg-panel: #1a1a1a;
+		--sp-bg-input: #1a1a1a;
+		--sp-bg-muted: #262626;
+		--sp-bg-hover: #262626;
+		--sp-bg-active: #333333;
+		--sp-text-primary: #ecece7;
+		--sp-text-secondary: #b8b8b2;
+		--sp-text-tertiary: #9a9a94;
+		--sp-text-faint: #a0a09a;
+		--sp-text-inverse: #121212;
+		--sp-border-subtle: rgba(255, 255, 255, 0.05);
+		--sp-border-default: rgba(255, 255, 255, 0.09);
+		--sp-accent: #fafafa;
+		--sp-accent-strong: #e4e4e7;
+		--sp-accent-soft: #2a2a2a;
+		--sp-danger: #f87171;
+		color-scheme: dark;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	background: var(--sp-bg-app);
+	color: var(--sp-text-primary);
+	font-family: var(--sp-sans);
+	font-size: var(--sp-fs-control);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+button,
+input {
+	font: inherit;
+	color: inherit;
+}
+
+/* ---------- 两栏骨架 ---------- */
+.panel {
+	display: grid;
+	grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+	height: 100%;
+}
+
+.col {
+	min-width: 0;
+	min-height: 0;
+	overflow: auto;
+	padding: 12px;
+}
+
+.list-col {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	border-right: 1px solid var(--sp-border-subtle);
+	background: var(--sp-bg-panel);
+}
+
+.detail-col {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+/* ---------- 控件 ---------- */
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+input[type="search"] {
+	width: 100%;
+	height: var(--sp-ctl-md);
+	padding: 0 10px;
+	border: 1px solid var(--sp-border-default);
+	border-radius: var(--sp-radius-md);
+	background: var(--sp-bg-input);
+}
+
+input[type="search"]:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--sp-accent);
+	outline-offset: 1px;
+}
+
+button {
+	height: var(--sp-ctl-md);
+	padding: 0 10px;
+	border: 1px solid var(--sp-border-default);
+	border-radius: var(--sp-radius-md);
+	background: var(--sp-bg-panel);
+	cursor: pointer;
+}
+
+button:hover {
+	background: var(--sp-bg-hover);
+}
+
+button:active {
+	background: var(--sp-bg-active);
+}
+
+button.primary {
+	border-color: transparent;
+	background: var(--sp-accent);
+	color: var(--sp-text-inverse);
+}
+
+button.primary:hover {
+	background: var(--sp-accent-strong);
+}
+
+button.wide {
+	width: 100%;
+}
+
+/* ---------- 列表 ---------- */
+.scope {
+	margin: 0;
+	font-size: var(--sp-fs-caption);
+	color: var(--sp-text-tertiary);
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.session {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	height: auto;
+	padding: 6px 8px;
+	border-color: transparent;
+	border-radius: var(--sp-radius-md);
+	text-align: left;
+}
+
+.session[data-selected="true"] {
+	border-color: var(--sp-border-default);
+	background: var(--sp-bg-active);
+}
+
+.session-title {
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.muted {
+	color: var(--sp-text-tertiary);
+}
+
+.session .muted {
+	max-width: 100%;
+	overflow: hidden;
+	font-size: var(--sp-fs-micro);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.message {
+	margin: 0;
+	font-size: var(--sp-fs-caption);
+	color: var(--sp-text-tertiary);
+}
+
+/* ---------- 详情 ---------- */
+.empty {
+	margin: auto;
+	color: var(--sp-text-faint);
+}
+
+h1 {
+	margin: 0;
+	font-size: var(--sp-fs-title);
+	font-weight: 600;
+	line-height: 1.35;
+}
+
+.meta {
+	margin: 0;
+	font-size: var(--sp-fs-caption);
+	color: var(--sp-text-tertiary);
+	word-break: break-all;
+}
+
+.history {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.entry {
+	padding: 8px 10px;
+	border: 1px solid var(--sp-border-subtle);
+	border-radius: var(--sp-radius-md);
+	background: var(--sp-bg-panel);
+}
+
+.entry-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 4px;
+}
+
+.entry-head .muted {
+	margin-left: auto;
+	font-size: var(--sp-fs-micro);
+	font-variant-numeric: tabular-nums;
+}
+
+.chip {
+	padding: 0 6px;
+	border: 1px solid var(--sp-border-default);
+	border-radius: var(--sp-radius-pill);
+	font-family: var(--sp-mono);
+	font-size: var(--sp-fs-micro);
+}
+
+.chip[data-role="assistant"] {
+	border-color: transparent;
+	background: var(--sp-accent-soft);
+}
+
+.entry-body {
+	margin: 0;
+	font-size: var(--sp-fs-body);
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.entry-body.muted {
+	font-size: var(--sp-fs-caption);
+}

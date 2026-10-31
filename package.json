@@ -1,0 +1,18 @@
+{
+	"name": "pideck-plugins",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "PiDeck 宿主插件的模板、收录与索引仓库",
+	"license": "MIT",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"new": "node scripts/new-plugin.mjs",
+		"validate": "node scripts/validate.mjs",
+		"validate:fix": "node scripts/validate.mjs --fix",
+		"search": "node scripts/search.mjs",
+		"pack": "node scripts/pack-all.mjs"
+	}
+}

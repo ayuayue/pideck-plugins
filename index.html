@@ -8,33 +8,34 @@
 		<style>
 			:root {
 				--paper: #ffffff;
-				--ink: #1a1917;
-				--muted: #6b6862;
-				--faint: #75726b;
-				--rule: #e5e2db;
-				--rule-strong: #cfcbc2;
-				--wash: #f8f6f2;
+				--ink: #171614;
+				--muted: #5f5c56;
+				--faint: #76736c;
+				--rule: #e3e0d8;
+				--rule-strong: #cbc7bd;
+				--wash: #f7f5f1;
 				--accent: #1d3f66;
 				--warn: #8a5200;
 				--ok: #2f6b45;
-				--sel: #e8e3d8;
+				--sel: #e7e2d7;
+				--radius: 6px;
 				--font: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "PingFang SC", sans-serif;
 				--mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 				color-scheme: light;
 			}
 			@media (prefers-color-scheme: dark) {
 				:root {
-					--paper: #121211;
-					--ink: #ece9e3;
-					--muted: #a29e96;
-					--faint: #857f77;
-					--rule: #2b2a27;
-					--rule-strong: #413f3a;
+					--paper: #111110;
+					--ink: #f0ede7;
+					--muted: #b0aca4;
+					--faint: #928e86;
+					--rule: #2a2926;
+					--rule-strong: #423f39;
 					--wash: #191917;
-					--accent: #93b6d9;
-					--warn: #d3a05a;
-					--ok: #7fbb96;
-					--sel: #33312c;
+					--accent: #9dbcdd;
+					--warn: #d7a460;
+					--ok: #83bf9a;
+					--sel: #34322c;
 					color-scheme: dark;
 				}
 			}
@@ -44,14 +45,11 @@
 			[hidden] {
 				display: none !important;
 			}
-			html {
-				background: var(--paper);
-			}
 			body {
 				margin: 0;
 				background: var(--paper);
 				color: var(--ink);
-				font: 14px/1.6 var(--font);
+				font: 15px/1.6 var(--font);
 				-webkit-font-smoothing: antialiased;
 				caret-color: var(--accent);
 			}
@@ -79,165 +77,97 @@
 				outline-offset: 3px;
 				border-radius: 2px;
 			}
-
-			.shell {
-				display: grid;
-				grid-template-columns: 236px minmax(0, 1fr);
-				max-width: 1300px;
+			.wrap {
+				max-width: 1180px;
 				margin: 0 auto;
 				padding: 0 32px;
 			}
 
-			/* ---- rail ---- */
-			.rail {
-				position: sticky;
-				top: 0;
-				align-self: start;
-				height: 100vh;
-				overflow-y: auto;
-				padding: 32px 26px 28px 0;
-				border-right: 1px solid var(--rule);
+			/* ---------- masthead ---------- */
+			.masthead {
+				padding: 60px 0 26px;
 			}
-			.brand {
-				margin: 0;
-				font-size: 18px;
-				font-weight: 650;
-				letter-spacing: -0.015em;
-			}
-			.brand-sub {
-				margin: 6px 0 0;
-				font-size: 12.5px;
-				line-height: 1.65;
-				color: var(--muted);
-			}
-			.rail h2 {
-				margin: 26px 0 8px;
-				font-size: 12.5px;
-				font-weight: 600;
-				letter-spacing: 0.04em;
-				color: var(--faint);
-			}
-			.filters {
-				display: flex;
-				flex-direction: column;
-				gap: 1px;
-			}
-			.filters button {
-				display: flex;
-				align-items: baseline;
-				gap: 8px;
-				width: 100%;
-				padding: 5px 0 5px 14px;
-				border: 0;
-				background: none;
-				color: var(--muted);
-				font-size: 13.5px;
-				text-align: left;
-				cursor: pointer;
-				position: relative;
-			}
-			.filters button::before {
-				content: "";
-				position: absolute;
-				left: 0;
-				top: 11px;
-				width: 5px;
-				height: 5px;
-				background: currentColor;
-				opacity: 0;
-			}
-			.filters button:hover {
+			.mast-mark {
+				width: 30px;
+				height: 30px;
 				color: var(--ink);
 			}
-			.filters button[aria-pressed="true"] {
-				color: var(--ink);
-				font-weight: 600;
+			.mast-line {
+				display: flex;
+				align-items: center;
+				gap: 14px;
 			}
-			.filters button[aria-pressed="true"]::before {
-				opacity: 1;
-			}
-			.filters .n {
-				margin-left: auto;
-				font-family: var(--mono);
-				font-size: 11.5px;
-				color: var(--faint);
-				font-variant-numeric: tabular-nums;
-			}
-			.steps {
+			h1 {
 				margin: 0;
-				padding: 0;
-				list-style: none;
-				counter-reset: s;
-				font-size: 12.5px;
+				font-size: 38px;
+				line-height: 1.1;
+				font-weight: 700;
+				letter-spacing: -0.032em;
+			}
+			.lede {
+				max-width: 640px;
+				margin: 14px 0 0;
+				font-size: 15px;
 				line-height: 1.7;
 				color: var(--muted);
 			}
-			.steps li {
-				position: relative;
-				padding-left: 17px;
-			}
-			.steps li + li {
-				margin-top: 5px;
-			}
-			.steps li::before {
-				counter-increment: s;
-				content: counter(s) ".";
-				position: absolute;
-				left: 0;
-				color: var(--faint);
-				font-family: var(--mono);
-				font-size: 11px;
-			}
-			.rail-mobile-note {
-				display: none;
-			}
-			.rail-foot {
-				margin-top: 26px;
-				padding-top: 14px;
-				border-top: 1px solid var(--rule);
-				font-size: 12.5px;
-				line-height: 1.9;
-				color: var(--muted);
-			}
-			.rail-foot a {
-				display: block;
+			.lede strong {
+				color: var(--ink);
+				font-weight: 600;
 			}
 
-			/* ---- main ---- */
-			main {
-				padding: 0 0 80px 40px;
-				min-width: 0;
-			}
-			.search {
+			/* ---------- toolbar ---------- */
+			.toolbar {
 				position: sticky;
 				top: 0;
-				z-index: 5;
+				z-index: 10;
+				padding: 12px 0;
+				background: var(--paper);
+				border-top: 1px solid var(--rule);
+				border-bottom: 1px solid var(--rule);
+			}
+			.toolbar-inner {
 				display: flex;
 				align-items: center;
 				gap: 12px;
-				padding: 26px 0 12px;
-				background: var(--paper);
-				border-bottom: 1px solid var(--rule);
+			}
+			.search {
+				position: relative;
+				display: flex;
+				flex: 0 1 340px;
+				align-items: center;
+				min-width: 0;
+			}
+			.search svg {
+				position: absolute;
+				left: 11px;
+				width: 15px;
+				height: 15px;
+				color: var(--faint);
+				pointer-events: none;
 			}
 			.search input {
-				flex: 1 1 auto;
-				min-width: 0;
-				height: 30px;
-				padding: 0;
-				border: 0;
-				background: none;
+				width: 100%;
+				height: 38px;
+				padding: 0 34px 0 34px;
+				border: 1px solid var(--rule-strong);
+				border-radius: var(--radius);
+				background: var(--paper);
 				color: inherit;
 				font: inherit;
-				font-size: 15px;
+				font-size: 14px;
 				appearance: none;
 			}
 			.search input::placeholder {
 				color: var(--muted);
 			}
-			.search input::-webkit-search-cancel-button {
-				appearance: none;
+			.search input:focus {
+				border-color: var(--ink);
+				outline: none;
 			}
 			.search kbd {
+				position: absolute;
+				right: 9px;
 				font-family: var(--mono);
 				font-size: 11px;
 				color: var(--faint);
@@ -248,14 +178,54 @@
 			.search:focus-within kbd {
 				opacity: 0;
 			}
-			.search:focus-within {
-				border-bottom-color: var(--ink);
+			.seg {
+				display: flex;
+				gap: 2px;
+				margin-left: auto;
+				padding: 3px;
+				border: 1px solid var(--rule);
+				border-radius: var(--radius);
+				background: var(--wash);
 			}
-			.status {
-				margin: 14px 0 0;
-				font-size: 12.5px;
+			.seg button {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				height: 30px;
+				padding: 0 11px;
+				border: 0;
+				border-radius: 4px;
+				background: none;
+				color: var(--muted);
+				font-size: 13px;
+				cursor: pointer;
+			}
+			.seg button:hover {
+				color: var(--ink);
+			}
+			.seg button[aria-pressed="true"] {
+				background: var(--paper);
+				color: var(--ink);
+				font-weight: 600;
+				box-shadow: 0 1px 2px rgb(0 0 0 / 0.07);
+			}
+			.seg .n {
+				font-family: var(--mono);
+				font-size: 11px;
 				color: var(--faint);
 				font-variant-numeric: tabular-nums;
+			}
+
+			/* ---------- status / notice ---------- */
+			.status {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				margin: -1px;
+				padding: 0;
+				overflow: hidden;
+				clip-path: inset(50%);
+				white-space: nowrap;
 			}
 			.notice {
 				display: flex;
@@ -265,7 +235,7 @@
 				margin-top: 12px;
 				padding: 8px 0 8px 12px;
 				border-left: 2px solid var(--warn);
-				font-size: 13px;
+				font-size: 13.5px;
 				color: var(--muted);
 			}
 			.notice strong {
@@ -277,165 +247,252 @@
 				background: none;
 				padding: 0;
 				color: var(--accent);
-				font-size: 13px;
+				font-size: 13.5px;
 				text-decoration: underline;
 				text-underline-offset: 3px;
 				cursor: pointer;
 			}
 
-			/* ---- groups ---- */
-			.group {
-				margin-top: 34px;
+			/* ---------- sections ---------- */
+			.section {
+				margin-top: 44px;
 			}
-			.group-head {
-				display: flex;
-				align-items: baseline;
-				gap: 10px;
-				padding-bottom: 8px;
-			}
-			.group-head h2 {
-				margin: 0;
-				font-size: 14px;
-				font-weight: 650;
-				letter-spacing: -0.005em;
-			}
-			.group-note {
-				font-size: 12.5px;
-				color: var(--faint);
-			}
-			.group-note[data-warn] {
-				color: var(--warn);
-			}
-			.group-count {
-				margin-left: auto;
-				font-family: var(--mono);
-				font-size: 11.5px;
-				color: var(--faint);
-				font-variant-numeric: tabular-nums;
-			}
-			.entries {
-				display: grid;
-				grid-template-columns: repeat(2, minmax(0, 1fr));
-				column-gap: 48px;
-			}
-			.entry {
-				padding: 14px 0 13px;
-				border-top: 1px solid var(--rule);
-				min-width: 0;
-			}
-			.e-head {
-				display: flex;
-				align-items: baseline;
-				gap: 9px;
-			}
-			.e-head svg {
-				flex: none;
-				width: 15px;
-				height: 15px;
-				color: var(--faint);
-				transform: translateY(2px);
-			}
-			.e-name {
-				color: var(--ink);
-				font-size: 15.5px;
-				font-weight: 600;
-				letter-spacing: -0.008em;
-				text-decoration: none;
-				overflow-wrap: anywhere;
-			}
-			.e-name:hover {
-				text-decoration: underline;
-				text-underline-offset: 3px;
-			}
-			.e-ver {
-				margin-left: auto;
-				flex: none;
-				font-family: var(--mono);
-				font-size: 11.5px;
-				color: var(--faint);
-				font-variant-numeric: tabular-nums;
-			}
-			.e-desc {
-				max-width: 58ch;
-				margin: 5px 0 0;
-				font-size: 13px;
-				line-height: 1.6;
-				color: var(--muted);
-			}
-			.e-foot {
+			.section-head {
 				display: flex;
 				align-items: baseline;
 				gap: 12px;
-				margin-top: 7px;
-				font-size: 12px;
+				padding-bottom: 10px;
+				border-bottom: 2px solid var(--ink);
 			}
-			.e-perm {
+			.section-head h2 {
+				margin: 0;
+				font-size: 15px;
+				font-weight: 700;
+				letter-spacing: -0.01em;
+			}
+			.section-head .n {
+				font-family: var(--mono);
+				font-size: 12px;
 				color: var(--faint);
-				min-width: 0;
+				font-variant-numeric: tabular-nums;
+			}
+			.section-note {
+				margin-left: auto;
+				font-size: 12.5px;
+				color: var(--faint);
+			}
+			.section-note[data-warn] {
+				color: var(--warn);
+			}
+			.section[data-kind="github"] .section-head {
+				border-bottom: 1px solid var(--rule-strong);
+			}
+			.section[data-kind="github"] .section-head h2 {
+				font-size: 13.5px;
+				font-weight: 600;
+			}
+
+			/* ---------- featured entries ---------- */
+			.featured {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				column-gap: 56px;
+			}
+			.f-entry {
+				display: flex;
+				flex-direction: column;
+				padding: 22px 0 18px;
+				border-bottom: 1px solid var(--rule);
+			}
+			.f-top {
+				display: flex;
+				align-items: baseline;
+				gap: 10px;
+			}
+			.f-name {
+				color: var(--ink);
+				font-size: 19px;
+				font-weight: 650;
+				letter-spacing: -0.018em;
+				line-height: 1.25;
+				text-decoration: none;
+				overflow-wrap: anywhere;
+			}
+			.f-name:hover {
+				text-decoration: underline;
+				text-underline-offset: 4px;
+			}
+			.f-ver {
+				margin-left: auto;
+				flex: none;
+				font-family: var(--mono);
+				font-size: 11.5px;
+				color: var(--faint);
+				font-variant-numeric: tabular-nums;
+			}
+			.f-desc {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 3;
+				overflow: hidden;
+				max-width: 52ch;
+				min-height: 5.1em;
+				margin: 8px 0 0;
+				font-size: 14px;
+				line-height: 1.7;
+				color: var(--muted);
+			}
+			.f-foot {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 10px 14px;
+				margin-top: auto;
+				padding-top: 16px;
+			}
+			.f-meta {
+				font-size: 12.5px;
+				color: var(--faint);
+			}
+			.f-meta b {
+				font-weight: 500;
+				color: var(--muted);
+			}
+			.f-copy {
+				margin-left: auto;
+				height: 32px;
+				padding: 0 13px;
+				border: 0;
+				border-radius: 5px;
+				background: var(--ink);
+				color: var(--paper);
+				font-size: 13px;
+				font-weight: 500;
+				cursor: pointer;
+				transition: background 140ms ease-out;
+			}
+			.f-copy:hover {
+				background: var(--accent);
+			}
+			.f-copy[data-state="done"] {
+				background: var(--ok);
+			}
+			.f-copy[data-state="failed"] {
+				background: var(--warn);
+			}
+
+			/* ---------- community entries ---------- */
+			.community {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				column-gap: 36px;
+			}
+			.c-entry {
+				padding: 15px 0 14px;
+				border-bottom: 1px solid var(--rule);
+			}
+			.c-top {
+				display: flex;
+				align-items: baseline;
+				gap: 8px;
+			}
+			.c-name {
+				color: var(--ink);
+				font-size: 14.5px;
+				font-weight: 600;
+				text-decoration: none;
+				overflow-wrap: anywhere;
+			}
+			.c-name:hover {
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+			.c-ver {
+				margin-left: auto;
+				flex: none;
+				font-family: var(--mono);
+				font-size: 11px;
+				color: var(--faint);
+				font-variant-numeric: tabular-nums;
+			}
+			.c-desc {
+				display: -webkit-box;
+				-webkit-box-orient: vertical;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+				margin: 5px 0 0;
+				font-size: 12.5px;
+				line-height: 1.6;
+				color: var(--muted);
+			}
+			.c-foot {
+				display: flex;
+				align-items: baseline;
+				gap: 10px;
+				margin-top: 7px;
+				font-size: 11.5px;
+				color: var(--faint);
+			}
+			.c-perm {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
-			.e-kind {
-				flex: none;
-				color: var(--faint);
-			}
-			.e-copy {
+			.c-copy {
 				margin-left: auto;
 				flex: none;
 				padding: 0;
 				border: 0;
 				background: none;
 				color: var(--accent);
-				font-size: 12px;
-				text-decoration: none;
+				font-size: 11.5px;
 				cursor: pointer;
 			}
-			.e-copy:hover {
+			.c-copy:hover {
 				text-decoration: underline;
 				text-underline-offset: 3px;
 			}
-			.e-copy[data-state="done"] {
+			.c-copy[data-state="done"] {
 				color: var(--ok);
 			}
-			.e-copy[data-state="failed"] {
+			.c-copy[data-state="failed"] {
 				color: var(--warn);
 			}
 
-			/* ---- states ---- */
+			/* ---------- empty / skeleton ---------- */
 			.empty {
-				margin-top: 34px;
-				padding: 40px 0;
-				border-top: 1px solid var(--rule);
+				margin-top: 40px;
+				padding: 44px 0;
+				border-top: 2px solid var(--ink);
 				border-bottom: 1px solid var(--rule);
 			}
 			.empty h2 {
 				margin: 0;
-				font-size: 15px;
-				font-weight: 600;
+				font-size: 17px;
+				font-weight: 650;
 			}
 			.empty p {
 				margin: 6px 0 0;
-				font-size: 13px;
+				font-size: 13.5px;
 				color: var(--muted);
 			}
 			.empty .acts {
 				display: flex;
-				gap: 16px;
-				margin-top: 12px;
+				gap: 18px;
+				margin-top: 14px;
 			}
 			.empty .acts button {
 				padding: 0;
 				border: 0;
 				background: none;
 				color: var(--accent);
-				font-size: 13px;
+				font-size: 13.5px;
 				text-decoration: underline;
 				text-underline-offset: 3px;
 				cursor: pointer;
 			}
 			.sk {
-				height: 9px;
+				height: 10px;
 				background: var(--wash);
 				border-radius: 2px;
 			}
@@ -453,119 +510,174 @@
 				}
 			}
 
-			@media (max-width: 900px) {
-				.shell {
-					grid-template-columns: minmax(0, 1fr);
+			/* ---------- how + footer ---------- */
+			.how {
+				margin-top: 52px;
+				padding-top: 22px;
+				border-top: 1px solid var(--rule);
+			}
+			.how h2 {
+				margin: 0 0 14px;
+				font-size: 13px;
+				font-weight: 600;
+				color: var(--muted);
+			}
+			.steps {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 28px;
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				counter-reset: s;
+			}
+			.steps li {
+				position: relative;
+				padding-left: 22px;
+				font-size: 13px;
+				line-height: 1.65;
+				color: var(--muted);
+			}
+			.steps li::before {
+				counter-increment: s;
+				content: counter(s);
+				position: absolute;
+				left: 0;
+				top: 0;
+				font-family: var(--mono);
+				font-size: 11.5px;
+				color: var(--faint);
+			}
+			footer {
+				margin-top: 36px;
+				padding: 16px 0 64px;
+				border-top: 1px solid var(--rule);
+				font-size: 12.5px;
+				color: var(--faint);
+			}
+			footer a {
+				margin-right: 18px;
+			}
+
+			@media (max-width: 1000px) {
+				.community {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+					column-gap: 28px;
+				}
+			}
+			@media (max-width: 760px) {
+				.wrap {
 					padding: 0 20px;
 				}
-				.rail {
-					position: static;
-					height: auto;
-					overflow: visible;
-					padding: 26px 0 18px;
-					border-right: 0;
-					border-bottom: 1px solid var(--rule);
+				.masthead {
+					padding: 36px 0 20px;
 				}
-				.filters {
-					flex-direction: row;
-					gap: 18px;
-					margin-top: 12px;
+				h1 {
+					font-size: 28px;
 				}
-				.filters button {
-					width: auto;
-					padding: 0;
+				.lede {
+					font-size: 14px;
 				}
-				.filters button::before {
-					display: none;
-				}
-				.filters button[aria-pressed="true"] {
-					text-decoration: underline;
-					text-underline-offset: 4px;
-				}
-				.filters .n {
-					margin-left: 4px;
-				}
-				.rail .steps-wrap {
-					display: none;
-				}
-				.rail-mobile-note {
-					display: block;
-					margin: 14px 0 0;
-					font-size: 12.5px;
-					line-height: 1.7;
-					color: var(--muted);
-				}
-				.rail-foot {
-					margin-top: 14px;
-					padding-top: 12px;
-				}
-				.rail-foot a {
-					display: inline;
-					margin-right: 16px;
-				}
-				main {
-					padding: 0 0 64px;
+				.toolbar-inner {
+					flex-wrap: wrap;
 				}
 				.search {
-					padding-top: 18px;
+					flex: 1 1 100%;
+					order: -1;
 				}
-				.entries {
+				.seg {
+					width: 100%;
+					margin-left: 0;
+				}
+				.seg button {
+					flex: 1 1 0;
+					justify-content: center;
+				}
+				.featured,
+				.community,
+				.steps {
 					grid-template-columns: minmax(0, 1fr);
+					column-gap: 0;
+				}
+				.steps {
+					gap: 10px;
+				}
+				.f-name {
+					font-size: 17px;
+				}
+				.f-desc {
+					min-height: 0;
+				}
+				.f-copy {
+					height: 30px;
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<div class="shell">
-			<aside class="rail">
-				<h1 class="brand">PiDeck 插件</h1>
-				<p class="brand-sub">官方收录由本仓库维护，人工核对过 manifest 与权限。社区条目抓自 GitHub topic，<strong>没有人审阅过</strong>。</p>
-
-				<h2>来源</h2>
-				<nav class="filters" aria-label="来源">
-					<button type="button" data-source="all" aria-pressed="true">全部<span class="n" data-count="all">0</span></button>
-					<button type="button" data-source="registry" aria-pressed="false">官方收录<span class="n" data-count="registry">0</span></button>
-					<button type="button" data-source="github" aria-pressed="false">社区<span class="n" data-count="github">0</span></button>
-				</nav>
-
-				<div class="steps-wrap">
-					<h2>怎么装</h2>
-					<ol class="steps">
-						<li>在 PiDeck 打开「设置 → 插件 → 安装插件 → 从 GitHub 链接…」，粘贴复制到的链接。</li>
-						<li>安装只把源码包放进去，不执行仓库里的脚本，也不跑构建。</li>
-						<li>装完是禁用状态，确认权限后才启用。</li>
-					</ol>
+		<header class="masthead">
+			<div class="wrap">
+				<div class="mast-line">
+					<svg class="mast-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<rect x="2.5" y="3.5" width="19" height="6" rx="1.6" />
+						<rect x="2.5" y="13.5" width="12.5" height="7" rx="1.6" />
+						<path d="M18 14.5v5" />
+					</svg>
+					<h1>PiDeck 插件</h1>
 				</div>
+				<p class="lede">
+					官方收录来自本仓库的 <code>registry.json</code>，人工核对过 manifest 与权限；社区条目抓自 GitHub 上打了 <code>pideck-plugin</code> topic 的仓库，<strong>没有人审阅过</strong>，装之前先看一眼源码。
+				</p>
+			</div>
+		</header>
 
-				<p class="rail-mobile-note">装法：设置 → 插件 → 安装插件 → 从 GitHub 链接…，装完仍是禁用状态，确认权限后才启用。</p>
-
-				<div class="rail-foot">
-					<a href="https://github.com/ayuayue/pideck-plugins">提 PR 收录</a>
-					<a href="https://github.com/ayuayue/PiDeck/blob/main/docs/host-plugin-dev-guide.md">插件开发文档</a>
-				</div>
-			</aside>
-
-			<main>
+		<div class="toolbar">
+			<div class="wrap toolbar-inner">
 				<div class="search">
+					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+						<circle cx="7" cy="7" r="4.3" />
+						<path d="M10.3 10.3 13.5 13.5" stroke-linecap="round" />
+					</svg>
 					<input id="query" type="search" placeholder="搜索插件、作者或标签" autocomplete="off" aria-label="搜索插件" />
 					<kbd aria-hidden="true">/</kbd>
 				</div>
-
-				<p id="status" class="status" role="status" aria-live="polite">加载中…</p>
-				<div id="notice" class="notice" hidden></div>
-
-				<div id="results"></div>
-
-				<div id="empty" class="empty" hidden>
-					<h2 id="empty-title">没有匹配的插件</h2>
-					<p id="empty-hint">换个关键词，或者切回全部来源看看。</p>
-					<div class="acts">
-						<button type="button" id="clear">清除搜索</button>
-						<button type="button" id="show-all">看全部</button>
-					</div>
+				<div class="seg" role="group" aria-label="来源">
+					<button type="button" data-source="all" aria-pressed="true">全部<span class="n" data-count="all">0</span></button>
+					<button type="button" data-source="registry" aria-pressed="false">收录<span class="n" data-count="registry">0</span></button>
+					<button type="button" data-source="github" aria-pressed="false">社区<span class="n" data-count="github">0</span></button>
 				</div>
-			</main>
+			</div>
 		</div>
+
+		<main class="wrap">
+			<p id="status" class="status" role="status" aria-live="polite">加载中…</p>
+			<div id="notice" class="notice" hidden></div>
+			<div id="results"></div>
+
+			<div id="empty" class="empty" hidden>
+				<h2 id="empty-title">没有匹配的插件</h2>
+				<p id="empty-hint">换个关键词，或者切回全部来源看看。</p>
+				<div class="acts">
+					<button type="button" id="clear">清除搜索</button>
+					<button type="button" id="show-all">看全部</button>
+				</div>
+			</div>
+
+			<section class="how">
+				<h2>怎么装</h2>
+				<ol class="steps">
+					<li>在 PiDeck 打开「设置 → 插件 → 安装插件 → 从 GitHub 链接…」，粘贴复制到的链接。</li>
+					<li>安装只把源码包放进去，不执行仓库里的脚本，也不跑构建。</li>
+					<li>装完是禁用状态，确认权限后才启用。</li>
+				</ol>
+			</section>
+
+			<footer>
+				<a href="https://github.com/ayuayue/pideck-plugins">提 PR 收录</a>
+				<a href="https://github.com/ayuayue/PiDeck/blob/main/docs/host-plugin-dev-guide.md">插件开发文档</a>
+				<a href="./registry.json">registry.json</a>
+			</footer>
+		</main>
 
 		<script type="module">
 			const REGISTRY_URL = "./registry.json";
@@ -580,27 +692,6 @@
 			const installUrl = (entry) => (entry.subpath ? `https://github.com/${entry.repo}/tree/${entry.ref ?? "main"}/${entry.subpath}` : `https://github.com/${entry.repo}`);
 
 			const KINDS = { page: "页面", popover: "浮层", modal: "弹窗" };
-
-			const ICONS = {
-				activity: '<path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/>',
-				"file-text": '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/>',
-				layers: '<path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
-				"bar-chart": '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
-				box: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
-			};
-
-			const mark = (name) => {
-				const node = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-				node.setAttribute("viewBox", "0 0 24 24");
-				node.setAttribute("fill", "none");
-				node.setAttribute("stroke", "currentColor");
-				node.setAttribute("stroke-width", "1.5");
-				node.setAttribute("stroke-linecap", "round");
-				node.setAttribute("stroke-linejoin", "round");
-				node.setAttribute("aria-hidden", "true");
-				node.innerHTML = ICONS[name] ?? ICONS.box;
-				return node;
-			};
 
 			function loadRegistry() {
 				return fetch(REGISTRY_URL).then((response) => {
@@ -661,121 +752,159 @@
 				return [entry.id, entry.name, entry.description, entry.author, entry.repo, ...(entry.tags ?? [])].some((value) => typeof value === "string" && value.toLowerCase().includes(needle));
 			}
 
-			function permText(entry) {
+			const permText = (entry) => {
 				const list = entry.permissions ?? [];
 				if (!list.length) return "不需要权限";
 				if (list.length === 1) return `需要 ${list[0]}`;
-				return `需要 ${list[0]} 等 ${list.length} 项权限`;
+				return `需要 ${list[0]} 等 ${list.length} 项`;
+			};
+
+			function copyAction(entry, url, className) {
+				const button = document.createElement("button");
+				button.type = "button";
+				button.className = className;
+				button.textContent = "复制安装链接";
+				button.title = "复制安装链接";
+				button.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(url);
+						button.dataset.state = "done";
+						button.textContent = "已复制";
+						setTimeout(() => {
+							delete button.dataset.state;
+							button.textContent = "复制安装链接";
+						}, 1600);
+					} catch {
+						button.dataset.state = "failed";
+						button.textContent = "复制失败";
+					}
+				});
+				return button;
 			}
 
-			function entryNode(entry) {
+			function featuredEntry(entry) {
 				const item = document.createElement("article");
-				item.className = "entry";
-
-				const head = document.createElement("div");
-				head.className = "e-head";
+				item.className = "f-entry";
 				const url = installUrl(entry);
+
+				const top = document.createElement("div");
+				top.className = "f-top";
 				const name = document.createElement("a");
-				name.className = "e-name";
+				name.className = "f-name";
 				name.href = url;
 				name.target = "_blank";
 				name.rel = "noreferrer noopener";
 				name.textContent = entry.name ?? entry.id;
 				name.title = entry.id;
 				const ver = document.createElement("span");
-				ver.className = "e-ver";
+				ver.className = "f-ver";
 				ver.textContent = entry.version ?? "";
-				head.append(mark(entry.icon), name, ver);
+				top.append(name, ver);
 
 				const desc = document.createElement("p");
-				desc.className = "e-desc";
+				desc.className = "f-desc";
 				desc.textContent = entry.description ?? "";
 
 				const foot = document.createElement("div");
-				foot.className = "e-foot";
-				const perm = document.createElement("span");
-				perm.className = "e-perm";
+				foot.className = "f-foot";
+				const meta = document.createElement("span");
+				meta.className = "f-meta";
+				const perm = document.createElement("b");
 				perm.textContent = permText(entry);
 				perm.title = (entry.permissions ?? []).join("\n") || "不需要任何权限";
+				meta.append(perm);
 				const kind = KINDS[entry.presentations?.[0]];
-				const copy = document.createElement("button");
-				copy.type = "button";
-				copy.className = "e-copy";
-				copy.textContent = "复制链接";
-				copy.title = "复制安装链接";
-				copy.addEventListener("click", async () => {
-					try {
-						await navigator.clipboard.writeText(url);
-						copy.dataset.state = "done";
-						copy.textContent = "已复制";
-						setTimeout(() => {
-							delete copy.dataset.state;
-							copy.textContent = "复制链接";
-						}, 1600);
-					} catch {
-						copy.dataset.state = "failed";
-						copy.textContent = "复制失败";
-					}
-				});
-				foot.append(perm);
-				if (kind) {
-					const kindEl = document.createElement("span");
-					kindEl.className = "e-kind";
-					kindEl.textContent = kind;
-					foot.append(kindEl);
-				}
-				foot.append(copy);
+				if (kind) meta.append(document.createTextNode(`　${kind}`));
+				foot.append(meta, copyAction(entry, url, "f-copy"));
 
-				item.append(head, desc, foot);
+				item.append(top, desc, foot);
 				return item;
 			}
 
-			function group(key, title, note, entries) {
-				const section = document.createElement("section");
-				section.className = "group";
+			function communityEntry(entry) {
+				const item = document.createElement("article");
+				item.className = "c-entry";
+				const url = installUrl(entry);
+
+				const top = document.createElement("div");
+				top.className = "c-top";
+				const name = document.createElement("a");
+				name.className = "c-name";
+				name.href = url;
+				name.target = "_blank";
+				name.rel = "noreferrer noopener";
+				name.textContent = entry.name ?? entry.id;
+				name.title = entry.id;
+				const ver = document.createElement("span");
+				ver.className = "c-ver";
+				ver.textContent = entry.version ?? "";
+				top.append(name, ver);
+
+				const desc = document.createElement("p");
+				desc.className = "c-desc";
+				desc.textContent = entry.description ?? "";
+
+				const foot = document.createElement("div");
+				foot.className = "c-foot";
+				const perm = document.createElement("span");
+				perm.className = "c-perm";
+				perm.textContent = permText(entry);
+				perm.title = (entry.permissions ?? []).join("\n") || "不需要任何权限";
+				foot.append(perm, copyAction(entry, url, "c-copy"));
+
+				item.append(top, desc, foot);
+				return item;
+			}
+
+			function section(key, title, note, entries) {
+				const wrap = document.createElement("section");
+				wrap.className = "section";
+				wrap.dataset.kind = key;
 				const head = document.createElement("div");
-				head.className = "group-head";
+				head.className = "section-head";
 				const heading = document.createElement("h2");
 				heading.textContent = title;
+				const count = document.createElement("span");
+				count.className = "n";
+				count.textContent = String(entries.length);
 				const noteEl = document.createElement("span");
-				noteEl.className = "group-note";
+				noteEl.className = "section-note";
 				noteEl.textContent = note;
 				if (key === "github") noteEl.dataset.warn = "";
-				const count = document.createElement("span");
-				count.className = "group-count";
-				count.textContent = String(entries.length);
-				head.append(heading, noteEl, count);
+				head.append(heading, count, noteEl);
+
 				const list = document.createElement("div");
-				list.className = "entries";
-				list.append(...entries.map(entryNode));
-				section.append(head, list);
-				return section;
+				list.className = key === "registry" ? "featured" : "community";
+				list.append(...entries.map(key === "registry" ? featuredEntry : communityEntry));
+				wrap.append(head, list);
+				return wrap;
 			}
 
 			function skeleton() {
-				const section = document.createElement("section");
-				section.className = "group skeleton";
+				const wrap = document.createElement("section");
+				wrap.className = "section skeleton";
 				const list = document.createElement("div");
-				list.className = "entries";
-				for (let i = 0; i < 8; i += 1) {
+				list.className = "featured";
+				for (let i = 0; i < 4; i += 1) {
 					const item = document.createElement("article");
-					item.className = "entry";
+					item.className = "f-entry";
 					const a = document.createElement("div");
 					a.className = "sk";
-					a.style.width = "38%";
+					a.style.width = "42%";
+					a.style.height = "16px";
 					const b = document.createElement("div");
 					b.className = "sk";
-					b.style.width = "88%";
-					b.style.marginTop = "10px";
+					b.style.width = "92%";
+					b.style.marginTop = "12px";
 					const c = document.createElement("div");
 					c.className = "sk";
-					c.style.width = "26%";
-					c.style.marginTop = "10px";
+					c.style.width = "30%";
+					c.style.marginTop = "12px";
 					item.append(a, b, c);
 					list.append(item);
 				}
-				section.append(list);
-				return section;
+				wrap.append(list);
+				return wrap;
 			}
 
 			function renderNotice() {
@@ -829,8 +958,8 @@
 					el("clear").hidden = !state.query.trim();
 					el("show-all").hidden = state.source === "all";
 				} else {
-					if (showRegistry.length) results.append(group("registry", "官方收录", "人工核对过 manifest 与权限", showRegistry));
-					if (showGithub.length) results.append(group("github", "社区 · 未审阅", "GitHub topic 自动抓取，PiDeck 不背书", showGithub));
+					if (showRegistry.length) results.append(section("registry", "官方收录", "人工核对过 manifest 与权限", showRegistry));
+					if (showGithub.length) results.append(section("github", "社区", "GitHub topic 自动抓取，未审阅，PiDeck 不背书", showGithub));
 				}
 
 				const filtering = Boolean(state.query.trim()) || state.source !== "all";

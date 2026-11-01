@@ -114,12 +114,20 @@ schema/               registry.json 的 JSON Schema（给编辑器用；权威�
 scripts/              new-plugin / validate / search / pack-all
 scripts/lib/          PiDeck manifest 与包预算的镜像校验
 docs/                 authoring.md（怎么写）· registry.md（收录格式与标准）
-index.html            GitHub Pages 上的搜索页
+index.html            搜索页的 Vite 入口（构建后由 Pages 提供）
+src/                  搜索页源码：React + Tailwind v4 + shadcn/beUI 组件
 registry.json         收录索引（市场官方源）
-.github/workflows/    validate（每次推送）· release（打 v* tag 时发 .pideck-plugin 附件）
+site/                 搜索页构建产物（npm run build，已忽略）
+.github/workflows/    validate（每次推送）· pages（构建并发布搜索页）· release（打 v* tag 时发 .pideck-plugin 附件）
 ```
 
-网页搜索页要能访问，需在仓库 Settings → Pages 里把 Source 设为 `Deploy from a branch` → `main` / `/(root)`（`.nojekyll` 已就位）。
+网页搜索页要能访问，需在仓库 Settings → Pages 里把 Source 设为 **GitHub Actions**（由 `pages.yml` 构建 `site/` 后发布）。本地预览：
+
+```bash
+npm install
+npm run dev      # 开发服务器
+npm run build    # 构建到 site/
+```
 
 ## 相关
 

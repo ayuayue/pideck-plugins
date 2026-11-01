@@ -1,6 +1,10 @@
 # 打包产物与临时文件
 dist/
+site/
 *.pideck-plugin
+
+# 依赖
+node_modules/
 
 # 编辑器 / 系统
 .DS_Store

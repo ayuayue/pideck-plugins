@@ -72,7 +72,7 @@ node scripts/search.mjs --registry  # 只看官方收录
 node scripts/search.mjs --github    # 只看 GitHub 社区
 ```
 
-网页版（同样逻辑，GitHub Pages）：<https://ayuayue.github.io/pideck-plugins/>
+网页版（同样逻辑，GitHub Pages）：<https://pideck-plugins.caoayu.top/>
 
 这个 CLI 用 Node 的全局 `fetch`，**不读 `HTTPS_PROXY`**——需要能直连 `api.github.com`。设 `GITHUB_TOKEN` 可以抬高 GitHub API 限额。PiDeck 应用内的市场搜索走 Electron 的 `net.fetch`，会跟随 PiDeck 自己的代理设置，不受这个限制。
 
@@ -116,6 +116,7 @@ scripts/lib/          PiDeck manifest 与包预算的镜像校验
 docs/                 authoring.md（怎么写）· registry.md（收录格式与标准）
 index.html            搜索页的 Vite 入口（构建后由 Pages 提供）
 src/                  搜索页源码：React + Tailwind v4 + shadcn/beUI 组件
+public/               原样复制进产物的静态文件（CNAME 自定义域名）
 registry.json         收录索引（市场官方源）
 site/                 搜索页构建产物（npm run build，已忽略）
 .github/workflows/    validate（每次推送）· pages（构建并发布搜索页）· release（打 v* tag 时发 .pideck-plugin 附件）
@@ -128,6 +129,12 @@ npm install
 npm run dev      # 开发服务器
 npm run build    # 构建到 site/
 ```
+
+自定义域名是 `pideck-plugins.caoayu.top`，域名写在 [`public/CNAME`](public/CNAME)，构建时会被带进 `site/`。换域名要同时改三处：
+
+1. `public/CNAME` 里的主机名；
+2. DNS 加一条 CNAME：`pideck-plugins` → `ayuayue.github.io`（Cloudflare 上可保持代理开启）；
+3. 仓库 Settings → Pages → Custom domain 填同一个主机名，勾选 Enforce HTTPS。
 
 ## 相关
 

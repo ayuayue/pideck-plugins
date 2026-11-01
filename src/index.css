@@ -128,3 +128,27 @@
     @apply font-sans;
     }
 }
+
+/* 品牌色跟文档站 pideck.caoayu.top 一致（VitePress indigo）。 */
+:root {
+	--primary: #3451b2;
+	--primary-foreground: #ffffff;
+	--ring: #3451b2;
+}
+
+.dark {
+	--primary: #a8b1ff;
+	--primary-foreground: #10131f;
+	--ring: #a8b1ff;
+}
+
+/* 每个插件一个稳定色相：同一明度、不同色相，图标块用。 */
+.tile-hue {
+	background: hsl(var(--h, 250) 72% 91%);
+	color: hsl(var(--h, 250) 58% 34%);
+}
+
+.dark .tile-hue {
+	background: hsl(var(--h, 250) 32% 23%);
+	color: hsl(var(--h, 250) 65% 76%);
+}

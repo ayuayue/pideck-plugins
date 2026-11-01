@@ -8,6 +8,10 @@ import { PluginCard } from "@/components/plugin-card";
 import { loadGitHub, loadRegistry, matches, type Plugin } from "@/lib/plugins";
 import { cn } from "@/lib/utils";
 
+// 图标色相按 id 排序固定分配，筛选时不会跳色。
+const HUES = [252, 285, 200, 340, 30, 160, 12, 220];
+const pluginKey = (plugin: Plugin) => `${plugin.source}:${plugin.repo}:${plugin.id}`;
+
 const SOURCES = [
 	{ value: "all", label: "全部" },
 	{ value: "registry", label: "收录" },
@@ -101,6 +105,14 @@ export default function App() {
 		void load();
 	}, [load]);
 
+	const hueMap = useMemo(() => {
+		const map = new Map<string, number>();
+		[...registry, ...github]
+			.sort((a, b) => pluginKey(a).localeCompare(pluginKey(b)))
+			.forEach((plugin, index) => map.set(pluginKey(plugin), HUES[index % HUES.length]));
+		return map;
+	}, [registry, github]);
+
 	const needle = query.trim().toLowerCase();
 	const registryMatches = useMemo(() => registry.filter((plugin) => matches(plugin, needle)), [registry, needle]);
 	const githubMatches = useMemo(() => github.filter((plugin) => matches(plugin, needle)), [github, needle]);
@@ -112,11 +124,11 @@ export default function App() {
 	const nothingLoaded = errors.length > 0 && registry.length === 0 && github.length === 0;
 
 	return (
-		<div className="min-h-screen bg-background">
-			<header className="border-b">
-				<div className="mx-auto max-w-6xl px-6 pb-10 pt-14">
+		<div className="min-h-screen bg-muted dark:bg-background">
+			<header className="bg-background">
+				<div className="mx-auto max-w-[1280px] px-6 pb-10 pt-14">
 					<div className="flex items-center gap-3">
-						<Mark className="size-8 text-foreground" />
+						<Mark className="size-8 text-primary" />
 						<h1 className="text-4xl font-semibold tracking-tight">PiDeck 插件</h1>
 					</div>
 					<p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">
@@ -126,8 +138,8 @@ export default function App() {
 				</div>
 			</header>
 
-			<div className="sticky top-0 z-30 border-b bg-background/85 backdrop-blur">
-				<div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-6 py-3">
+			<div className="sticky top-0 z-30 border-b bg-background">
+				<div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-3 px-6 py-3">
 					<Input
 						value={query}
 						onChange={setQuery}
@@ -136,7 +148,7 @@ export default function App() {
 						aria-label="搜索插件"
 						className="w-full sm:max-w-xs"
 					/>
-					<div className="ml-auto flex items-center gap-1 rounded-full border bg-muted/40 p-1">
+					<div className="ml-auto flex items-center gap-1 rounded-full border bg-background p-1">
 						{SOURCES.map((item) => {
 							const count =
 								item.value === "all"
@@ -152,7 +164,10 @@ export default function App() {
 									variant={active ? "secondary" : "ghost"}
 									aria-pressed={active}
 									onClick={() => setSource(item.value)}
-									className={cn("gap-1.5", active && "shadow-sm")}
+									className={cn(
+										"gap-1.5",
+										active && "border-primary/30 bg-primary/5 text-primary shadow-sm",
+									)}
 								>
 									{item.label}
 									<span className="font-mono text-[11px] tabular-nums opacity-60">{count}</span>
@@ -163,7 +178,7 @@ export default function App() {
 				</div>
 			</div>
 
-			<main className="mx-auto max-w-6xl px-6 py-10">
+			<main className="mx-auto max-w-[1280px] px-6 py-10">
 				<p className="sr-only" role="status" aria-live="polite">
 					{loading ? "加载中" : filtering ? `匹配 ${total} 个插件` : `${registry.length} 个官方收录，${github.length} 个社区条目`}
 				</p>
@@ -215,10 +230,15 @@ export default function App() {
 								title="官方收录"
 								count={showRegistry.length}
 								note="人工核对过 manifest 与权限"
-								className="gap-4 md:grid-cols-2"
+								className="items-start gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 							>
 								{showRegistry.map((plugin) => (
-									<PluginCard key={plugin.id} plugin={plugin} tier="featured" />
+									<PluginCard
+										key={plugin.id}
+										plugin={plugin}
+										tier="featured"
+										hue={hueMap.get(pluginKey(plugin))}
+									/>
 								))}
 							</Section>
 						) : null}
@@ -229,17 +249,35 @@ export default function App() {
 								count={showGithub.length}
 								note="GitHub topic 自动抓取，PiDeck 不背书"
 								badge={<AnimatedBadge status="warning" size="sm">未审阅</AnimatedBadge>}
-								className="gap-3 sm:grid-cols-2 lg:grid-cols-3"
+								className="items-start gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
 							>
 								{showGithub.map((plugin) => (
-									<PluginCard key={`${plugin.repo}/${plugin.id}`} plugin={plugin} tier="compact" />
+									<PluginCard
+										key={`${plugin.repo}/${plugin.id}`}
+										plugin={plugin}
+										tier="compact"
+										hue={hueMap.get(pluginKey(plugin))}
+									/>
 								))}
 							</Section>
+						) : source !== "registry" && !query.trim() ? (
+							<section>
+								<div className="flex flex-wrap items-center gap-3">
+									<h2 className="text-lg font-semibold tracking-tight">社区</h2>
+									<span className="text-sm tabular-nums text-muted-foreground">0</span>
+									<AnimatedBadge status="warning" size="sm">未审阅</AnimatedBadge>
+									<span className="ml-auto text-xs text-muted-foreground">GitHub topic 自动抓取，PiDeck 不背书</span>
+								</div>
+								<p className="mt-4 rounded-xl border border-dashed px-5 py-6 text-sm text-muted-foreground">
+									还没有仓库打上 <code className="rounded bg-muted px-1 py-0.5 text-[13px]">pideck-plugin</code>{" "}
+									topic。给自己的仓库打上它，就会出现在这里。
+								</p>
+							</section>
 						) : null}
 					</div>
 				)}
 
-				<section className="mt-16 border-t pt-8">
+				<section id="install" className="mt-16 scroll-mt-20 border-t pt-8">
 					<h2 className="text-sm font-semibold text-muted-foreground">怎么装</h2>
 					<ol className="mt-4 grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
 						<li className="flex gap-2.5">

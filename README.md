@@ -66,6 +66,10 @@ node scripts/validate.mjs --pideck ../PiDeck
 
 `validate.mjs` 是 CI 门禁，也是投稿前的自检。它只做**静态**检查（manifest 规则、权限与目的地匹配、包预算、registry 一致），不替代在 PiDeck 里真跑一遍。本仓库的校验是 PiDeck 安装校验的**镜像**（见 `scripts/lib/hostPlugin.mjs` 顶部说明），判定永远以 PiDeck 为准。
 
+### 发布到双源
+
+同一份 `main` 同时镜像到 GitHub 与 AtomGit（`atomgit` remote = `https://atomgit.com/ayuayue/pideck-plugins.git`）：改完 `registry.json` 或插件后先跑 `node scripts/validate.mjs`，再 `git push origin main && git push atomgit main`。PiDeck 市场默认读 GitHub raw，失败时自动回退 AtomGit 的 `raw` API；官方条目用 `atomgitRepo` 声明镜像仓库，用户可在市场里切换下载源。
+
 ### 搜索
 
 ```bash

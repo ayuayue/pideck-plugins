@@ -171,6 +171,7 @@ async function main() {
 				if (typeof entry.repo === "string" && !/^[A-Za-z0-9._-]{1,100}\/[A-Za-z0-9._-]{1,100}$/.test(entry.repo)) errors.push(`${at}: repo 必须写成 owner/name`);
 				if (entry.tags !== undefined && (!Array.isArray(entry.tags) || !entry.tags.every((tag) => typeof tag === "string" && tag.trim()))) errors.push(`${at}: tags 必须是非空字符串数组`);
 				if (entry.subpath !== undefined && !/^[A-Za-z0-9._/-]{1,240}$/.test(entry.subpath)) errors.push(`${at}: subpath 只能包含 A-Za-z0-9._/-`);
+				if (entry.atomgitRepo !== undefined && (typeof entry.atomgitRepo !== "string" || !/^[A-Za-z0-9._-]{1,100}\/[A-Za-z0-9._-]{1,100}$/.test(entry.atomgitRepo))) errors.push(`${at}: atomgitRepo 必须写成 owner/name`);
 				if (entry.ref !== undefined && !/^[A-Za-z0-9._/-]{1,120}$/.test(entry.ref)) errors.push(`${at}: ref 只能包含 A-Za-z0-9._/-`);
 				if (entry.homepage !== undefined && (typeof entry.homepage !== "string" || !entry.homepage.startsWith("https://"))) errors.push(`${at}: homepage 必须是 https:// 开头的字符串`);
 

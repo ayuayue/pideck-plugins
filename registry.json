@@ -13,6 +13,7 @@
 			"license": "MIT",
 			"repo": "ayuayue/pideck-plugins",
 			"ref": "main",
+			"atomgitRepo": "ayuayue/pideck-plugins",
 			"subpath": "plugins/billion-context",
 			"tags": ["本地服务", "代理", "bili", "上下文"],
 			"homepage": "https://github.com/ayuayue/pideck-plugins/tree/main/plugins/billion-context"
@@ -29,6 +30,7 @@
 			"license": "MIT",
 			"repo": "ayuayue/pideck-plugins",
 			"ref": "main",
+			"atomgitRepo": "ayuayue/pideck-plugins",
 			"subpath": "plugins/project-notes",
 			"tags": ["便签", "笔记", "零权限", "存储"],
 			"homepage": "https://github.com/ayuayue/pideck-plugins/tree/main/plugins/project-notes"
@@ -45,6 +47,7 @@
 			"license": "MIT",
 			"repo": "ayuayue/pideck-plugins",
 			"ref": "main",
+			"atomgitRepo": "ayuayue/pideck-plugins",
 			"subpath": "plugins/session-groups",
 			"tags": ["会话", "分组", "整理", "侧栏"],
 			"homepage": "https://github.com/ayuayue/pideck-plugins/tree/main/plugins/session-groups"
@@ -61,6 +64,7 @@
 			"license": "MIT",
 			"repo": "ayuayue/pideck-plugins",
 			"ref": "main",
+			"atomgitRepo": "ayuayue/pideck-plugins",
 			"subpath": "plugins/session-stats",
 			"tags": ["会话", "统计", "看板", "图表"],
 			"homepage": "https://github.com/ayuayue/pideck-plugins/tree/main/plugins/session-stats"

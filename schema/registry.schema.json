@@ -54,6 +54,7 @@
 				},
 				"ref": { "type": "string", "pattern": "^[A-Za-z0-9._/-]{1,120}$", "description": "手写：分支或 tag，缺省用仓库默认分支。" },
 				"subpath": { "type": "string", "pattern": "^[A-Za-z0-9._/-]{1,240}$", "description": "手写：插件在仓库里的子目录（单仓库多插件时必须写）。" },
+				"atomgitRepo": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,100}/[A-Za-z0-9._-]{1,100}$", "description": "手写：同一插件在 AtomGit 的镜像仓库（owner/name），ref/subpath 沿用 GitHub 条目；缺省表示没有镜像。" },
 				"homepage": { "type": "string", "pattern": "^https://", "description": "手写：给人看的页面。" },
 				"tags": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "手写：搜索关键词。" }
 			}

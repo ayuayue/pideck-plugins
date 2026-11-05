@@ -27,6 +27,7 @@
 | `repo` | ✅ | `owner/name`。**源码可以在别的仓库**，不必是本仓库 |
 | `ref` | — | 分支 / tag / commit。省略 = 仓库默认分支 |
 | `subpath` | — | 插件在仓库里的子目录。省略 = 仓库根 |
+| `atomgitRepo` | — | 同一插件在 AtomGit 的镜像仓库 `owner/name`；`ref` / `subpath` 沿用 GitHub 条目。缺省 = 只提供 GitHub 源 |
 | `tags` | — | 小写关键词，参与市场搜索（`id` / `name` / `description` 之外的补充） |
 | `homepage` | — | 插件主页或源码目录链接；省略时按 `repo`/`ref`/`subpath` 拼 |
 

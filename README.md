@@ -13,7 +13,9 @@ PiDeck 里的**插件市场**（设置 → PiDeck 插件 → 插件市场）同�
 1. **官方收录** —— 本仓库的 `registry.json`，人工核对过 manifest 与权限；
 2. **社区 · 未审阅** —— GitHub 上所有打了 [`pideck-plugin`](https://github.com/topics/pideck-plugin) topic 的公开仓库，按星标排序。PiDeck 不为这些来源背书。
 
-搜到就能直接装：市场里的「安装」复用 PiDeck 已有的「从 GitHub 链接安装」链路（`codeload.github.com` 的 tar.gz，不执行仓库里的任何脚本），装完仍是**禁用**状态，必须在插件列表里逐项确认权限后才会启用。
+搜到就能直接装：市场里的「安装」复用 PiDeck 已有的「从链接安装」链路（GitHub 走 `codeload.github.com` 的 tar.gz，AtomGit 镜像走 API 逐个取文件；都不执行仓库里的任何脚本），装完仍是**禁用**状态，必须在插件列表里逐项确认权限后才会启用。
+
+官方收录默认以 GitHub 为下载源，可在市场里切到 **AtomGit 镜像**（`atomgit.com/ayuayue/pideck-plugins`，`registry.json` 的 `atomgitRepo` 字段声明）。镜像由同一份 `main` 分支同步，安装内容与授权流程完全相同。
 
 ## 快速开始
 
